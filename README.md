@@ -1,2 +1,2 @@
-# snackbar_apk
+# snackbar_app
 Snackbar Management App
