@@ -1,5 +1,7 @@
-class NetworkConfig {
-  NetworkConfig._();
+import 'dart:io';
+
+class AppNetworkSettings {
+  AppNetworkSettings._();
 
   static const String baseUrl = 'https://wwww.example.com';
 
@@ -15,4 +17,8 @@ class NetworkConfig {
       };
 
   static const String authorizationKey = 'Authorization';
+  static const String refreshTokenKey = 'refreshToken';
+
+  // HttpStatus doesn't have the code Invalid Token
+  static const int invalidToken = 498;
 }

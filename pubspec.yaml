@@ -109,4 +109,4 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 scripts:
-  gen_files: dart run build_runner build --delete-conflicting-outputs
+  gen_files: fvm dart run build_runner build --delete-conflicting-outputs
