@@ -26,6 +26,14 @@ mixin _$SignInResponse {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
   String get username => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson)
+  Role get role => throw _privateConstructorUsedError;
+  @JsonKey(name: 'foto')
+  String? get picture => throw _privateConstructorUsedError;
+  @JsonKey(name: 'accessToken')
+  String get accessToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'refreshToken')
+  String get refreshToken => throw _privateConstructorUsedError;
 
   /// Serializes this SignInResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +54,11 @@ abstract class $SignInResponseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') int id,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'username') String username});
+      @JsonKey(name: 'username') String username,
+      @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson) Role role,
+      @JsonKey(name: 'foto') String? picture,
+      @JsonKey(name: 'accessToken') String accessToken,
+      @JsonKey(name: 'refreshToken') String refreshToken});
 }
 
 /// @nodoc
@@ -67,6 +79,10 @@ class _$SignInResponseCopyWithImpl<$Res, $Val extends SignInResponse>
     Object? id = null,
     Object? name = null,
     Object? username = null,
+    Object? role = null,
+    Object? picture = freezed,
+    Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,6 +96,22 @@ class _$SignInResponseCopyWithImpl<$Res, $Val extends SignInResponse>
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -96,7 +128,11 @@ abstract class _$$SignInResponseImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') int id,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'username') String username});
+      @JsonKey(name: 'username') String username,
+      @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson) Role role,
+      @JsonKey(name: 'foto') String? picture,
+      @JsonKey(name: 'accessToken') String accessToken,
+      @JsonKey(name: 'refreshToken') String refreshToken});
 }
 
 /// @nodoc
@@ -115,6 +151,10 @@ class __$$SignInResponseImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? username = null,
+    Object? role = null,
+    Object? picture = freezed,
+    Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
     return _then(_$SignInResponseImpl(
       id: null == id
@@ -129,6 +169,22 @@ class __$$SignInResponseImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -139,7 +195,11 @@ class _$SignInResponseImpl implements _SignInResponse {
   const _$SignInResponseImpl(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'username') required this.username});
+      @JsonKey(name: 'username') required this.username,
+      @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson) required this.role,
+      @JsonKey(name: 'foto') required this.picture,
+      @JsonKey(name: 'accessToken') required this.accessToken,
+      @JsonKey(name: 'refreshToken') required this.refreshToken});
 
   factory _$SignInResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$SignInResponseImplFromJson(json);
@@ -153,10 +213,22 @@ class _$SignInResponseImpl implements _SignInResponse {
   @override
   @JsonKey(name: 'username')
   final String username;
+  @override
+  @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson)
+  final Role role;
+  @override
+  @JsonKey(name: 'foto')
+  final String? picture;
+  @override
+  @JsonKey(name: 'accessToken')
+  final String accessToken;
+  @override
+  @JsonKey(name: 'refreshToken')
+  final String refreshToken;
 
   @override
   String toString() {
-    return 'SignInResponse(id: $id, name: $name, username: $username)';
+    return 'SignInResponse(id: $id, name: $name, username: $username, role: $role, picture: $picture, accessToken: $accessToken, refreshToken: $refreshToken)';
   }
 
   @override
@@ -167,12 +239,19 @@ class _$SignInResponseImpl implements _SignInResponse {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, username);
+  int get hashCode => Object.hash(runtimeType, id, name, username, role,
+      picture, accessToken, refreshToken);
 
   /// Create a copy of SignInResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -195,7 +274,12 @@ abstract class _SignInResponse implements SignInResponse {
   const factory _SignInResponse(
           {@JsonKey(name: 'id') required final int id,
           @JsonKey(name: 'name') required final String name,
-          @JsonKey(name: 'username') required final String username}) =
+          @JsonKey(name: 'username') required final String username,
+          @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson)
+          required final Role role,
+          @JsonKey(name: 'foto') required final String? picture,
+          @JsonKey(name: 'accessToken') required final String accessToken,
+          @JsonKey(name: 'refreshToken') required final String refreshToken}) =
       _$SignInResponseImpl;
 
   factory _SignInResponse.fromJson(Map<String, dynamic> json) =
@@ -210,6 +294,18 @@ abstract class _SignInResponse implements SignInResponse {
   @override
   @JsonKey(name: 'username')
   String get username;
+  @override
+  @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson)
+  Role get role;
+  @override
+  @JsonKey(name: 'foto')
+  String? get picture;
+  @override
+  @JsonKey(name: 'accessToken')
+  String get accessToken;
+  @override
+  @JsonKey(name: 'refreshToken')
+  String get refreshToken;
 
   /// Create a copy of SignInResponse
   /// with the given fields replaced by the non-null parameter values.
