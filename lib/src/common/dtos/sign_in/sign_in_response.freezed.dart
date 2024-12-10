@@ -191,7 +191,7 @@ class __$$SignInResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SignInResponseImpl implements _SignInResponse {
+class _$SignInResponseImpl extends _SignInResponse {
   const _$SignInResponseImpl(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'name') required this.name,
@@ -199,7 +199,8 @@ class _$SignInResponseImpl implements _SignInResponse {
       @JsonKey(fromJson: Role.fromJson, toJson: Role.toJson) required this.role,
       @JsonKey(name: 'foto') required this.picture,
       @JsonKey(name: 'accessToken') required this.accessToken,
-      @JsonKey(name: 'refreshToken') required this.refreshToken});
+      @JsonKey(name: 'refreshToken') required this.refreshToken})
+      : super._();
 
   factory _$SignInResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$SignInResponseImplFromJson(json);
@@ -270,7 +271,7 @@ class _$SignInResponseImpl implements _SignInResponse {
   }
 }
 
-abstract class _SignInResponse implements SignInResponse {
+abstract class _SignInResponse extends SignInResponse {
   const factory _SignInResponse(
           {@JsonKey(name: 'id') required final int id,
           @JsonKey(name: 'name') required final String name,
@@ -281,6 +282,7 @@ abstract class _SignInResponse implements SignInResponse {
           @JsonKey(name: 'accessToken') required final String accessToken,
           @JsonKey(name: 'refreshToken') required final String refreshToken}) =
       _$SignInResponseImpl;
+  const _SignInResponse._() : super._();
 
   factory _SignInResponse.fromJson(Map<String, dynamic> json) =
       _$SignInResponseImpl.fromJson;
