@@ -7,7 +7,6 @@ final class SignInParams extends Equatable {
   final String password;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         username,
         password,

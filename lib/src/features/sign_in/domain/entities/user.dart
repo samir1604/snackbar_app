@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../common/enums/role_enum.dart';
+import '../../../../common/enums/role_enum.dart';
 
 final class User extends Equatable {
   const User({

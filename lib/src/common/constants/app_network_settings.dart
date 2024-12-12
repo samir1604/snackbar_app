@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class AppNetworkSettings {
   AppNetworkSettings._();
 

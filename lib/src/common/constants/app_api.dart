@@ -4,5 +4,5 @@ class AppApi {
   static const String refreshTokenEndpoint = '/api/auth/refresh-token';
 
   //Auth
-  static const String signInApiEndpoint = '/api/auth/signing';
+  static const String signInEndpoint = '/api/auth/signing';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snackbar_ui/snackbar_ui.dart';
 
 import 'features/home/pages/home_page.dart';
+import 'features/sign_in/presentation/pages/sign_in_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -14,7 +15,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }

@@ -26,7 +26,8 @@ class _SignInApi implements SignInApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = data;
+    final _data = <String, dynamic>{};
+    _data.addAll(data.toJson());
     final _options = _setStreamType<SignInResponse>(Options(
       method: 'POST',
       headers: _headers,
