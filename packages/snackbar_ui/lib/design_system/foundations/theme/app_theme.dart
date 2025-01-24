@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snackbar_ui/design_system/foundations/app_color_scheme.dart';
 
 import 'app_bar_theme.dart';
 import 'app_bottom_sheet_theme.dart';
@@ -9,7 +10,6 @@ import 'app_outlined_button_theme.dart';
 import 'app_text_theme.dart';
 import 'app_textformfield_theme.dart';
 
-
 class AppTheme {
   AppTheme._();
 
@@ -17,10 +17,9 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: 'Poppins',
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
+    colorScheme: AppColorScheme.lightScheme,
     textTheme: AppTextTheme.lightTextTheme,
     chipTheme: AppChipTheme.lightChipTheme,
-    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppThemeBar.lightAppBarTheme,
     checkboxTheme: AppCheckboxTheme.lightCheckboxTheme,
     bottomSheetTheme: AppBottomSheetTheme.lightBottomSheetTheme,
@@ -33,10 +32,9 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: 'Poppins',
     brightness: Brightness.dark,
-    primaryColor: Colors.blue,
+    colorScheme: AppColorScheme.darkScheme,
     textTheme: AppTextTheme.darkTextTheme,
     chipTheme: AppChipTheme.darkChipTheme,
-    scaffoldBackgroundColor: Colors.black,
     appBarTheme: AppThemeBar.darkAppBarTheme,
     checkboxTheme: AppCheckboxTheme.darkCheckboxTheme,
     bottomSheetTheme: AppBottomSheetTheme.darkBottomSheetTheme,

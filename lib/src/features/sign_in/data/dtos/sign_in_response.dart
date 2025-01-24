@@ -1,7 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../common/enums/role_enum.dart';
-import '../../domain/entities/user.dart';
+import '../../domain/models/user_model.dart';
+
 
 part 'sign_in_response.freezed.dart';
 
@@ -24,7 +25,7 @@ class SignInResponse with _$SignInResponse {
   factory SignInResponse.fromJson(Map<String, dynamic> json) =>
       _$SignInResponseFromJson(json);
 
-  User toUser() => User(
+  UserModel toUser() => UserModel(
     id: id,
     name: name,
     userName: username,

@@ -26,6 +26,7 @@ final class NetworkInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 
+  /*
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (response.requestOptions.path == AppApi.signInEndpoint &&
@@ -38,6 +39,7 @@ final class NetworkInterceptor extends Interceptor {
     }
     super.onResponse(response, handler);
   }
+   */
 
   @override
   void onError(

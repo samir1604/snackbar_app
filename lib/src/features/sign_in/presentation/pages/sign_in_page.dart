@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:snackbar_ui/utils/app_text_theme_extensions.dart';
+
+import '../../../../core/service_locator.dart';
+import '../states/sign_in_state.dart';
+import '../view_models/sign_in_view_model.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({
+    super.key,
+    required this.viewModel,
+  });
+
+  final SignInViewModel viewModel;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -11,10 +22,25 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
+
+  //bool _isLoading = false;
+  late final SignInViewModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    model = getIt.get<SignInViewModel>();
+  }
 
   void _login() async {
+
     if (_formKey.currentState!.validate()) {
+      widget.viewModel.signIn(
+        _usernameController.text,
+        _passwordController.text,
+      );
+
+      /*
       setState(() {
         _isLoading = true;
       });
@@ -30,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Inicio de sesión exitoso.')),
       );
+      */
     }
   }
 
@@ -64,23 +91,13 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Iniciar Sesión',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
-                        ),
-                      ),
+                      Text('Iniciar Sesión', style: context.titleLarge),
                       SizedBox(height: 16),
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
                           labelText: 'Usuario',
                           prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -95,9 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
                           prefixIcon: Icon(Icons.lock),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
                         ),
                         obscureText: true,
                         validator: (value) {
@@ -108,24 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       SizedBox(height: 24),
-                      _isLoading
-                          ? CircularProgressIndicator()
-                          : SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          onPressed: _login,
-                          child: Text(
-                            'Iniciar sesión',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
+                      ValueListenableBuilder<SignInState>(
+                          valueListenable: model.state,
+                          builder: (context, state, _) =>
+                              _builder(context, state, _login))
                     ],
                   ),
                 ),
@@ -137,10 +137,74 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _builder(
+    BuildContext context,
+    SignInState state,
+    VoidCallback? onClick,
+  ) {
+    switch (state) {
+      case Loading():
+        return CircularProgressIndicator();
+      case Success():
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          //TODO: Cambiar a pagina Home
+        });
+        return _loginButton(
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.thumb_up),
+              Text('Iniciar sesión', style: TextStyle(fontSize: 16))
+            ]),
+            onClick);
+      case Failure(message: final msg):
+        WidgetsBinding.instance.addPostFrameCallback(
+            (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  msg,
+                  style: TextStyle(color: Colors.black),
+                ))));
+
+        return _loginButton(
+            Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Iniciar sesión',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(Icons.thumb_down, color: Colors.red),
+                ]),
+            onClick);
+      default:
+        return _loginButton(
+          Text('Iniciar sesión', style: TextStyle(fontSize: 16)),
+          onClick,
+        );
+    }
+  }
+
+  Widget _loginButton(Widget? child, VoidCallback? onClick) => SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 12),
+            ),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              if(onClick != null) onClick();
+            } ,
+            child: child),
+      );
+
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    model.state.dispose();
     super.dispose();
   }
 }
