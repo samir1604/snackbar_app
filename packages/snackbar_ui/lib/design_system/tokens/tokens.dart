@@ -1,3 +1,3 @@
 export 'colors.dart';
-export 'sizes.dart';
+export 'screen_sizes.dart';
 export 'typography.dart';

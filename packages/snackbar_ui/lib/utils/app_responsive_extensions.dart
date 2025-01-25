@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:snackbar_ui/design_system/foundations/app_responsive_size.dart';
+import 'package:snackbar_ui/design_system/foundations/app_screen_size.dart';
 
 extension AppResponsiveExtensions on BuildContext {
 
@@ -17,17 +17,15 @@ extension AppResponsiveExtensions on BuildContext {
   double safeBlockSizeHorizontal(double percentage) => _safeBlockHorizontal * percentage;
   double safeBlockSizeVertical(double percentage) => _safeBlockVertical * percentage;
 
-  bool get isSmallMobile => width < AppResponsiveSize.smallMobile;
+  bool get isSmallMobile => width <= AppScreenSize.smallMobile;
 
-  bool get isMediumMobile => width >= AppResponsiveSize.smallMobile && width < AppResponsiveSize.mobile;
+  bool get isMobile => width > AppScreenSize.smallMobile && width <= AppScreenSize.mobile;
 
-  bool get isMobile => width >= AppResponsiveSize.mobile && width < AppResponsiveSize.tablet;
+  bool get isTable => width > AppScreenSize.mobile && width <= AppScreenSize.tablet;
 
-  bool get isTable => width >= AppResponsiveSize.tablet && width < AppResponsiveSize.laptop;
+  bool get isLaptop => width > AppScreenSize.tablet && width <= AppScreenSize.laptop;
 
-  bool get isDesktop => width > AppResponsiveSize.laptop;
-
-  bool get isLargeDesktop => width >= AppResponsiveSize.desktop;
+  bool get isDesktop => width > AppScreenSize.laptop;
 
   double get width => MediaQuery.of(this).size.width;
 
@@ -52,11 +50,11 @@ extension AppResponsiveExtensions on BuildContext {
         T? xl,
       }) =>
       switch (width) {
-        >= AppResponsiveSize.desktop => xl ?? lg ?? md ?? sm ?? defaultVal,
-        >= AppResponsiveSize.laptop => lg ?? md ?? sm ?? defaultVal,
-        >= AppResponsiveSize.tablet => md ?? sm ?? defaultVal,
-        >= AppResponsiveSize.mobile => sm ?? defaultVal,
-        >= AppResponsiveSize.smallMobile => xsm ?? defaultVal,
+        >= AppScreenSize.laptop => xl ?? lg ?? md ?? sm ?? defaultVal,
+        >= AppScreenSize.tablet => lg ?? md ?? sm ?? defaultVal,
+        >= AppScreenSize.smallTablet => md ?? sm ?? defaultVal,
+        >= AppScreenSize.mobile => sm ?? defaultVal,
+        >= AppScreenSize.smallMobile => xsm ?? defaultVal,
         _ => defaultVal
       };
 }

@@ -1,43 +1,57 @@
 import 'package:flutter/material.dart';
+import '../app_colors.dart';
+import '../typo.dart';
 
 class AppElevatedButtonTheme {
   AppElevatedButtonTheme._();
 
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-    elevation: 0,
-    foregroundColor: Colors.white,
-    backgroundColor: Colors.blue,
-    disabledForegroundColor: Colors.grey,
-    disabledBackgroundColor: Colors.grey,
-    side: const BorderSide(color: Colors.blue),
-    padding: const EdgeInsets.symmetric(vertical: 18),
-    textStyle: const TextStyle(
-      fontSize: 16,
-      color: Colors.white,
-      fontWeight: FontWeight.w600,
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-    ),
-  ));
+          enabledMouseCursor: SystemMouseCursors.click,
+          shadowColor: AppColors.shadowGrey,
+          side: const BorderSide(color: AppColors.onPrimaryLight),
+          backgroundColor: WidgetStateColor.resolveWith((states) =>
+              states.contains(WidgetState.disabled)
+                  ? AppColors.disabled.withOpacity(.5)
+                  : AppColors.primaryLight),
+          foregroundColor: WidgetStateColor.resolveWith((states) =>
+              states.contains(WidgetState.disabled)
+                  ? AppColors.onPrimaryLight.withOpacity(.5)
+                  : AppColors.backgroundLight),
+          elevation: 2.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          textStyle: const TextStyle(
+              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+          overlayColor: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.pressed)
+                ? AppColors.black12
+                : Colors.transparent,
+          )));
 
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        elevation: 0,
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
-        disabledForegroundColor: Colors.grey,
-        disabledBackgroundColor: Colors.grey,
-        side: const BorderSide(color: Colors.blue),
-        padding: const EdgeInsets.symmetric(vertical: 18),
-        textStyle: const TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ));
+          enabledMouseCursor: SystemMouseCursors.click,
+          shadowColor: AppColors.shadowGrey,
+          side: const BorderSide(color: AppColors.surfaceDark),
+          backgroundColor: WidgetStateColor.resolveWith((states) =>
+              states.contains(WidgetState.disabled)
+                  ? AppColors.disabled.withOpacity(.5)
+                  : AppColors.primaryDark),
+          foregroundColor: WidgetStateColor.resolveWith((states) =>
+              states.contains(WidgetState.disabled)
+                  ? AppColors.onPrimaryDark.withOpacity(.5)
+                  : AppColors.surfaceDark),
+          elevation: 2.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          textStyle: const TextStyle(
+              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+          overlayColor: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.pressed)
+                ? AppColors.white12
+                : Colors.transparent,
+          )));
 }

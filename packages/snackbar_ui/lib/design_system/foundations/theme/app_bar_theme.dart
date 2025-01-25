@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../app_colors.dart';
+import '../typo.dart';
+
 class AppThemeBar {
   AppThemeBar._();
 
@@ -7,14 +10,14 @@ class AppThemeBar {
     elevation: 0,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
-    surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(color: Colors.black, size: 24),
-    actionsIconTheme: IconThemeData(color: Colors.black, size: 24),
+    backgroundColor: AppColors.surfaceLight,
+    foregroundColor: AppColors.onPrimaryLight,
+    iconTheme: IconThemeData(color: AppColors.onPrimaryLight),
+    actionsIconTheme: IconThemeData(color: AppColors.onPrimaryLight),
     titleTextStyle: TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w600,
-      color: Colors.black,
+      fontSize: Typo.fontBodyMD,
+      fontWeight: FontWeight.w500,
+      color: AppColors.onPrimaryLight,
     ),
   );
 
@@ -22,14 +25,14 @@ class AppThemeBar {
     elevation: 0,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
-    surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(color: Colors.black, size: 24),
-    actionsIconTheme: IconThemeData(color: Colors.white, size: 24),
+    backgroundColor: AppColors.surfaceDark,
+    foregroundColor: AppColors.onPrimaryDark,
+    iconTheme: IconThemeData(color: AppColors.onPrimaryDark),
+    actionsIconTheme: IconThemeData(color: AppColors.onPrimaryDark),
     titleTextStyle: TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
+      fontSize: Typo.fontBodyMD,
+      fontWeight: FontWeight.w500,
+      color: AppColors.onPrimaryDark,
     ),
   );
 }
