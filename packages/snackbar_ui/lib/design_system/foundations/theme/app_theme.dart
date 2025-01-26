@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:snackbar_ui/design_system/foundations/app_colors.dart';
+
 import 'package:snackbar_ui/design_system/foundations/theme/app_card_theme.dart';
 import 'package:snackbar_ui/design_system/foundations/theme/app_floating_action_button_theme.dart';
 import 'package:snackbar_ui/design_system/foundations/theme/app_popup_menu_button_theme.dart';
 import 'package:snackbar_ui/design_system/foundations/theme/app_slider_theme.dart';
 import 'package:snackbar_ui/design_system/foundations/theme/app_tab_bar_theme.dart';
 
+import '../app_colors.dart';
 import 'app_bar_theme.dart';
 import 'app_bottom_sheet_theme.dart';
 import 'app_checkbox_theme.dart';

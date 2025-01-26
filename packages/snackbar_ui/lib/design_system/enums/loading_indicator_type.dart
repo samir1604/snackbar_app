@@ -1,0 +1,4 @@
+enum LoadingIndicatorType {
+  circular,
+  linear,
+}
