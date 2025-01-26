@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../enums/button_type.dart';
 import '../foundations/app_sizes.dart';
 
+/// {@template app_button}
+/// Un átomo que representa un botón con diferentes estilos
+/// (elevated, outlined, text) e iconos.
+/// {@endtemplate}
 class AppButton extends StatelessWidget {
+  /// {@macro app_button}
   const AppButton({
     super.key,
     required this.text,
@@ -12,9 +17,13 @@ class AppButton extends StatelessWidget {
     this.icon,
   });
 
+  ///Texto a mostrar en el botón.
   final String text;
+  ///Tipo de botón a mostrar.
   final ButtonType type;
+  ///Función opcional que se ejecutará al presionar el botón.
   final VoidCallback? onPressed;
+  ///Icono a mostrar a la izquierda del texto.
   final Widget? icon;
 
   @override
