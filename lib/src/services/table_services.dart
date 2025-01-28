@@ -1,8 +1,8 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/entities/table.dart';
 
 class TableServices {
+  /*
   final Map<int, Table> _tables = {};
   final BehaviorSubject<Table?> _notificationSubject =
       BehaviorSubject.seeded(null);
@@ -17,4 +17,6 @@ class TableServices {
     _tables[table.id] = table;
     _notificationSubject.add(table);
   }
+
+   */
 }

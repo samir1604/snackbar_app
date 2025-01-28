@@ -1,4 +1,4 @@
-import '../../common/dtos/refresh_tokens/refresh_token_response.dart';
+import '../../features/auth/data/models/response/refresh_token_response.dart';
 
 abstract interface class TokenServices {
   Future<String?> getAccessToken();

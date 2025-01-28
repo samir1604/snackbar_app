@@ -2,22 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:dio_http_formatter/dio_http_formatter.dart';
 import 'package:get_it/get_it.dart';
 
-import '../common/constants/app_network_settings.dart';
-import '../features/sign_in/data/remote/sign_in_api.dart';
-import '../features/sign_in/data/repositories/sign_in_repository_impl.dart';
+import '../common/common.dart';
+import '../features/auth/auth.dart';
 
-import '../features/sign_in/domain/models/user_model.dart';
-import '../features/sign_in/domain/repositories/sign_in_repository.dart';
-import '../domain/use_cases/use_case.dart';
-
-import '../features/sign_in/domain/params/sign_in_params.dart';
-import '../features/sign_in/domain/usecase/sign_in_usecase.dart';
-import '../features/sign_in/presentation/view_models/sign_in_view_model.dart';
-import '../services/table_services.dart';
-import 'local/secure_storage/secure_storage_service.dart';
-import 'remote/network/network_interceptor.dart';
-import 'remote/token/token_service_impl.dart';
-import 'services/secure_storage.dart';
+import 'core.dart';
 
 final getIt = GetIt.instance;
 
@@ -27,10 +15,10 @@ void initServiceLocator() {
 
   getIt.registerLazySingleton<Dio>(() {
     final Dio dio = Dio(BaseOptions(
-      baseUrl: AppNetworkSettings.baseUrl,
-      connectTimeout: AppNetworkSettings.connectTimeout,
-      receiveTimeout: AppNetworkSettings.receiveTimeout,
-      sendTimeout: AppNetworkSettings.sendTimeout,
+      baseUrl: NetworkSettings.baseUrl,
+      connectTimeout: NetworkSettings.connectTimeout,
+      receiveTimeout: NetworkSettings.receiveTimeout,
+      sendTimeout: NetworkSettings.sendTimeout,
     ));
     dio.interceptors.addAll([
       HttpFormatter(loggingFilter: (_, __, ___) => true),
@@ -41,18 +29,18 @@ void initServiceLocator() {
   });
 
   //Repositories
-  getIt.registerLazySingleton<TableServices>(() => TableServices());
-  getIt.registerLazySingleton<SignInRepository>(
-      () => SignInRepositoryImpl(SignInApi(getIt<Dio>())));
+  //getIt.registerLazySingleton<TableServices>(() => TableServices());
+  getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRemoteRepository(AuthApi(getIt<Dio>())));
 
   //Use Cases
-  getIt.registerLazySingleton<UseCase<UserModel, SignInParams>>(
-    () => SignInUseCase(
-      getIt<SignInRepository>(),
+  getIt.registerLazySingleton<UseCase<UserModel, LoginParams>>(
+    () => LoginUseCase(
+      getIt<AuthRepository>(),
       getIt<SecureStorage>(),
     ),
   );
 
-  getIt.registerLazySingleton<SignInViewModel>(
-      () => SignInViewModel(getIt<UseCase<UserModel, SignInParams>>()));
+  getIt.registerLazySingleton<LoginViewModel>(
+      () => LoginViewModel(getIt<UseCase<UserModel, LoginParams>>()));
 }

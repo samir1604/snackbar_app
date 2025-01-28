@@ -1,3 +1,0 @@
-class AppDioExceptionMessages {
-  AppDioExceptionMessages._();
-}

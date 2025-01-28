@@ -19,6 +19,8 @@ class AppLabeledTextInput extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
     this.suffixIcon,
+    this.onChanged,
+    this.onSubmitted
   });
 
   /// Texto que se muestra como etiqueta encima del campo de texto.
@@ -33,6 +35,9 @@ class AppLabeledTextInput extends StatelessWidget {
   final bool obscureText;
   /// Icono a mostrar al final del input
   final Widget? suffixIcon;
+
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -52,6 +57,8 @@ class AppLabeledTextInput extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             suffixIcon: suffixIcon,
+            onChanged: onChanged,
+            onSubmitted: onSubmitted,
           ),
         ],
       );

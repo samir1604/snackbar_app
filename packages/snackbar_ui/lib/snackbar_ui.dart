@@ -1,5 +1,4 @@
 library;
 
-export 'design_system/foundations/foundations.dart';
-
+export 'design_system/design_system.dart';
 export 'utils/utils.dart';

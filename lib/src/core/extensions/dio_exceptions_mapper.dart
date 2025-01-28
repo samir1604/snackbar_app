@@ -2,49 +2,49 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../../common/constants/app_network_settings.dart';
-import '../exceptions/failure.dart';
+import '../../common/common.dart';
+import '../core.dart';
 
 extension DioExceptionsMapper on DioException {
-  Failure toFailure(StackTrace stackTrace) {
+  HttpClientException toHttpClientException(StackTrace stackTrace) {
     return switch (type) {
-      DioExceptionType.connectionTimeout => Failure(
+      DioExceptionType.connectionTimeout => HttpClientException(
           message: _getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.sendTimeout => Failure(
+      DioExceptionType.sendTimeout => HttpClientException(
           message:_getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.receiveTimeout => Failure(
+      DioExceptionType.receiveTimeout => HttpClientException(
           message:
           _getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.badCertificate => Failure(
+      DioExceptionType.badCertificate => HttpClientException(
           message: _getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.badResponse => Failure(
+      DioExceptionType.badResponse => HttpClientException(
           message: _getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.cancel => Failure(
+      DioExceptionType.cancel => HttpClientException(
           message: _getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.connectionError => Failure(
+      DioExceptionType.connectionError => HttpClientException(
           message:_getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
         ),
-      DioExceptionType.unknown => Failure(
+      DioExceptionType.unknown => HttpClientException(
           message:_getMessageForStatusCode(response?.statusCode),
           exception: this,
           stackTrace: stackTrace,
@@ -54,13 +54,13 @@ extension DioExceptionsMapper on DioException {
 
   String _getMessageForStatusCode(int? statusCode) {
     return switch (statusCode) {
-      HttpStatus.badRequest => 'Bad request. Please try again later',
-      HttpStatus.unauthorized => 'Unauthorized. Please try again later',
-      HttpStatus.forbidden => 'Forbidden. Please try again later',
-      HttpStatus.notFound => 'Not found. Please try again later',
-      HttpStatus.internalServerError => 'Internal Server Error. Please try again later',
-      HttpStatus.serviceUnavailable => 'Service unavailable. Please try again later',
-      AppNetworkSettings.invalidToken => 'Refresh token expired. Please try again later',
+      HttpStatus.badRequest => HttpExceptionMessages.badRequest400,
+      HttpStatus.unauthorized => HttpExceptionMessages.unauthorized401,
+      HttpStatus.forbidden => HttpExceptionMessages.forbidden403,
+      HttpStatus.notFound => HttpExceptionMessages.notFound404,
+      HttpStatus.internalServerError => HttpExceptionMessages.internalServerError500,
+      HttpStatus.serviceUnavailable => HttpExceptionMessages.serviceUnavailable503,
+      NetworkSettings.invalidToken => HttpExceptionMessages.invalidToken489,
       _ => 'Unknown error. Please try again later'
     };
   }
