@@ -11,12 +11,16 @@ class AppLoadingIndicator extends StatelessWidget {
     this.value,
     this.color,
     this.size,
+    this.strokeWidth,
+    this.isDarkMode = false,
   });
 
   final LoadingIndicatorType type;
   final double? value;
   final Color? color;
   final double? size;
+  final double? strokeWidth;
+  final bool isDarkMode;
 
   @override
   Widget build(BuildContext context) => switch (type) {
@@ -24,8 +28,15 @@ class AppLoadingIndicator extends StatelessWidget {
             width: size ?? AppSizes.loadingIndicatorSize,
             height: size ?? AppSizes.loadingIndicatorSize,
             child: CircularProgressIndicator(
-                value: value, color: color ?? AppColors.primaryLight)),
+                value: value,
+                strokeWidth: strokeWidth ?? 4,
+                color: color ??
+                    (isDarkMode
+                        ? AppColors.primaryDark
+                        : AppColors.primaryLight))),
         LoadingIndicatorType.linear => LinearProgressIndicator(
-            value: value, color: color ?? AppColors.primaryLight),
+            value: value,
+            color:
+                (isDarkMode ? AppColors.primaryDark : AppColors.primaryLight)),
       };
 }

@@ -6,8 +6,8 @@ import '../../../../core/service_locator.dart';
 import '../states/login_state.dart';
 import '../view_models/login_view_model.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({
+class SignInPage extends StatefulWidget {
+  const SignInPage({
     super.key,
     required this.viewModel,
   });
@@ -15,10 +15,10 @@ class LoginPage extends StatefulWidget {
   final LoginViewModel viewModel;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

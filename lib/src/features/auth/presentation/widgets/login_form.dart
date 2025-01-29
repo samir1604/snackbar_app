@@ -32,7 +32,31 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'Nombre de Usuario',
             controller: _usernameController,
             keyboardType: TextInputType.text,
-          )
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Ingrese un nombre';
+              }
+              return null;
+            },
+          ),
+          AppLabeledTextInput(
+            labelText: 'Contraseña',
+            controller: _passwordController,
+            keyboardType: TextInputType.visiblePassword,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Ingrese una contraseña';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: AppSizes.md, bottom: AppSizes.sm),
+            child: AppButton(
+              text: 'Iniciar',
+              onPressed: () {},
+            ),
+          ),
         ],
       ),
     );

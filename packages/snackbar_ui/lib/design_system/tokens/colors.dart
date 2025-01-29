@@ -10,4 +10,5 @@ class BaseColors {
 
   static const Color midnightGrey = Color(0xFF1A1A1A);
   static const Color midGrey = Color(0xFFAAAAAA);
+  static const Color steelGrey = Color(0xFFB0BEC5);
 }

@@ -18,7 +18,7 @@ class AppColors {
   static const Color surfaceDark = BaseColors.deepGrey;
   static const Color primaryDark = BaseColors.redPink;
   static const Color onPrimaryDark = BaseColors.white;
-  static const Color onSecondaryDark = BaseColors.midGrey;
+  static const Color onSecondaryDark = BaseColors.steelGrey;
   static const Color accentDark = BaseColors.redPink;
 
   //Common

@@ -1,0 +1,1 @@
+typedef FormValidator<T> = T? Function(T?)?;

@@ -8,6 +8,7 @@ class AppImageAsset extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
     this.borderRadius,
+    this.errorWidget,
   });
 
   final String assetPath;
@@ -15,15 +16,16 @@ class AppImageAsset extends StatelessWidget {
   final double? height;
   final BoxFit fit;
   final BorderRadius? borderRadius;
+  final Widget? errorWidget;
 
   @override
   Widget build(BuildContext context) => ClipRRect(
         borderRadius: borderRadius ?? BorderRadius.zero,
-        child: Image.asset(
-          assetPath,
-          width: width,
-          height: height,
-          fit: fit,
-        ),
+        child: Image.asset(assetPath,
+            width: width,
+            height: height,
+            fit: fit,
+            errorBuilder: (_, __, ___) =>
+                errorWidget ?? const Icon(Icons.error_outline)),
       );
 }

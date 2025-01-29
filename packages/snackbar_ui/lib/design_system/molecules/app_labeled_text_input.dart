@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:snackbar_ui/snackbar_ui.dart';
 
-import '../atoms/app_text.dart';
-import '../atoms/app_text_input.dart';
-import '../foundations/app_sizes.dart';
 import '../foundations/typo.dart';
 
 /// {@template app_labeled_text_input}
@@ -20,7 +18,8 @@ class AppLabeledTextInput extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.onChanged,
-    this.onSubmitted
+    this.onSubmitted,
+    this.validator,
   });
 
   /// Texto que se muestra como etiqueta encima del campo de texto.
@@ -36,8 +35,12 @@ class AppLabeledTextInput extends StatelessWidget {
   /// Icono a mostrar al final del input
   final Widget? suffixIcon;
 
+  /// Metodo que se ejecuta cuando cambie el valor del cuadro de texto
   final ValueChanged<String>? onChanged;
+  /// Metodo que se ejecuta cuando se envia el formulario
   final ValueChanged<String>? onSubmitted;
+
+  final FormValidator<String> validator;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -59,6 +62,7 @@ class AppLabeledTextInput extends StatelessWidget {
             suffixIcon: suffixIcon,
             onChanged: onChanged,
             onSubmitted: onSubmitted,
+            validator: validator,
           ),
         ],
       );
