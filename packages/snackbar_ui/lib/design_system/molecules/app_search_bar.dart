@@ -14,6 +14,11 @@ class AppSearchBar extends StatelessWidget {
     this.hintText,
     this.onChanged,
     this.onSubmitted,
+    this.isDarkMode = false,
+    this.inputStyle,
+    this.focusNode,
+    this.decoration,
+    this.suffixIcon,
   });
 
   ///Texto de sugerencia a mostrar en el campo de texto.
@@ -25,6 +30,21 @@ class AppSearchBar extends StatelessWidget {
   ///Función que se ejecuta al enviar el formulario de búsqueda.
   final ValueChanged<String>? onSubmitted;
 
+  ///Define si el input se encuentra en el modo oscuro
+  final bool isDarkMode;
+
+  /// Permite personalizar el estilo del texto del input
+  final TextStyle? inputStyle;
+
+  /// Permite manejar el foco del input
+  final FocusNode? focusNode;
+
+  ///Permite personalizar la decoracion del input
+  final BoxDecoration? decoration;
+
+  /// Permite personalizar el icono del input
+  final AppIcon? suffixIcon;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,12 +54,15 @@ class AppSearchBar extends StatelessWidget {
           Expanded(
             child: AppTextInput(
               hintText: hintText ?? 'Buscar...',
-              suffixIcon: AppIcon(
-                icon: Icons.search,
-                color: Theme.of(context).hintColor,
-              ),
+              suffixIcon: suffixIcon ??
+                  AppIcon(
+                    icon: Icons.search,
+                    color: Theme.of(context).hintColor,
+                  ),
               onChanged: onChanged,
               onSubmitted: onSubmitted,
+              focusNode: focusNode,
+              isDarkMode: isDarkMode,
             ),
           ),
         ],

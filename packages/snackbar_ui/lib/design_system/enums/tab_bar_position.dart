@@ -1,0 +1,4 @@
+enum TabBarPosition {
+  top,
+  bottom
+}

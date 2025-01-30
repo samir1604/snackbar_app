@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snackbar_ui/design_system/design_system.dart';
 
 import '../atoms/app_text.dart';
 import '../foundations/app_sizes.dart';
@@ -12,6 +13,9 @@ class AppSectionHeader extends StatelessWidget {
     super.key,
     required this.title,
     this.action,
+    this.isDarkMode = false,
+    this.titleStyle,
+    this.verticalPadding,
   });
 
   /// Texto a mostrar como título de la sección.
@@ -20,24 +24,26 @@ class AppSectionHeader extends StatelessWidget {
   /// Widget opcional a mostrar al final del encabezado, para realizar una acción.
   final Widget? action;
 
+  ///Define si se esta usando el modo oscuro
+  final bool isDarkMode;
+
+  ///Permite personalizar el espacio vertical
+  final double? verticalPadding;
+
+  ///Permite personalizar el estilo del texto del titulo
+  final TextStyle? titleStyle;
+
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.sm),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AppText(
-            text: title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: AppSizes.fontSizeLg,
-            ),
-          ),
-          if (action != null)
-            action!,
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.symmetric(vertical: verticalPadding ?? AppSizes.sm),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppText(
+                text: title,
+                style: titleStyle ?? AppStyles.titleH3(isDarkMode: isDarkMode)),
+            if (action != null) action!,
+          ],
+        ),
+      );
 }

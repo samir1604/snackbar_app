@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../atoms/app_text.dart';
-import '../foundations/app_colors.dart';
-import '../foundations/app_sizes.dart';
+import '../atoms/atoms.dart';
+import '../foundations/foundations.dart';
 
 /// {@template app_dropdown_button_with_label}
 /// Una molécula que representa un botón desplegable con una etiqueta.
@@ -16,6 +15,10 @@ class AppDropdownButtonWithLabel<T> extends StatelessWidget {
     required this.onChanged,
     this.value,
     this.hintText,
+    this.isDarkMode = false,
+    this.decoration,
+    this.labelStyle,
+    this.dropdownStyle,
   });
 
   /// Texto a mostrar como etiqueta del dropdown.
@@ -33,6 +36,18 @@ class AppDropdownButtonWithLabel<T> extends StatelessWidget {
   /// Texto a mostrar como hint del dropdown.
   final String? hintText;
 
+  ///Define si se esta usando el modo oscuro
+  final bool isDarkMode;
+
+  ///Permite personalizar la decoracion del dropdown
+  final BoxDecoration? decoration;
+
+  ///Permite personalizar el estilo del texto del label
+  final TextStyle? labelStyle;
+
+  ///Permite personalizar el estilo del texto del dropdown
+  final TextStyle? dropdownStyle;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,22 +55,20 @@ class AppDropdownButtonWithLabel<T> extends StatelessWidget {
       children: [
         AppText(
           text: labelText,
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: AppSizes.fontSizeSm,
-          ),
+          style: labelStyle ?? AppStyles.bodySM(isDarkMode: isDarkMode),
         ),
         const SizedBox(height: AppSizes.xs),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
-          decoration: BoxDecoration(
-            color: AppColors.onSecondaryLight,
-            borderRadius: BorderRadius.circular(AppSizes.borderRadiusMd),
-          ),
+          decoration: decoration ??
+              BoxDecoration(
+                color: AppColors.onSecondaryLight,
+                borderRadius: BorderRadius.circular(AppSizes.borderRadiusMd),
+              ),
           child: DropdownButton<T>(
             isExpanded: true,
             value: value,
-            hint:  Text(hintText ?? ""),
+            hint: Text(hintText ?? "", style: dropdownStyle),
             items: items,
             onChanged: onChanged,
             underline: Container(),
