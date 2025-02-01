@@ -2,7 +2,7 @@ class Typography {
   Typography._();
 
   //Fonts
-  static const String familyPoppins = 'Poppins';
+  static const String familyGilroy = 'Gilroy';
 
   //Sizes
   static const double sizeXXL = 48.0;

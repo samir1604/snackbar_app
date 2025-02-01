@@ -7,12 +7,12 @@ class AppColorScheme {
   static ColorScheme lightScheme = ColorScheme.light(
       brightness: Brightness.light,
       primary: AppColors.primaryLight,
+      onPrimary: AppColors.onPrimaryLight,
       secondary: AppColors.onSecondaryLight,
       surface: AppColors.surfaceLight,
-      onPrimary: AppColors.onPrimaryLight,
       onSurface: AppColors.onSecondaryLight);
 
-  static ColorScheme darkScheme = ColorScheme.light(
+  static ColorScheme darkScheme = ColorScheme.dark(
       brightness: Brightness.dark,
       primary: AppColors.primaryDark,
       secondary: AppColors.onSecondaryDark,

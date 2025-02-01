@@ -8,12 +8,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => context.responsive(
-      Scaffold(
-        body: Center(
-            child: Padding(
-              padding: EdgeInsets.all(AppSizes.md),
-              child: LoginForm(),
-            )),
+      GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.opaque,
+        child: Scaffold(
+          body: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(AppSizes.md),
+                  child: LoginForm(),
+                ),
+              )),
+        ),
       ),
       {
         AppScreenSize.smallTablet: Scaffold(
@@ -40,7 +46,7 @@ class LoginPage extends StatelessWidget {
                             shape: BoxShape.circle,
                             color: Colors.blueAccent,
                             image: DecorationImage(
-                              image: AssetImage('assets/images/header-image.jpeg'), // Logo en la parte superior
+                              image:AssetImage('assets/images/logo-black.png'), // Logo en la parte superior
                               fit: BoxFit.cover,
                             ),
                           ),

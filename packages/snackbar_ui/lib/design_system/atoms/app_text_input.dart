@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:snackbar_ui/design_system/design_system.dart';
 
 import '../../type_def/type_definition.dart';
-import '../foundations/app_input_decoration.dart';
-import '../foundations/app_styles.dart';
 
 class AppTextInput extends StatelessWidget {
   const AppTextInput({
@@ -11,6 +10,7 @@ class AppTextInput extends StatelessWidget {
     this.controller,
     this.keyboardType,
     this.obscureText = false,
+    this.prefixIcon,
     this.suffixIcon,
     this.onChanged,
     this.onSubmitted,
@@ -24,6 +24,7 @@ class AppTextInput extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final bool obscureText;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -38,10 +39,11 @@ class AppTextInput extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: obscureText,
         focusNode: focusNode,
-        style: AppStyles.bodyMd(isDarkMode: isDarkMode),
+        style: AppStyles.bodyMd(textColor: AppColors.onSecondaryLight),
         decoration: AppInputDecoration.style(
           hintText: hintText,
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           labelText: labelText,
           isDarkMode: isDarkMode,
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppTabBarTheme {
   AppTabBarTheme._();
@@ -12,9 +12,9 @@ class AppTabBarTheme {
     labelColor: AppColors.onPrimaryLight,
     unselectedLabelColor: AppColors.disabled,
     labelStyle:
-        const TextStyle(fontSize: Typo.fontBodyMD, fontWeight: FontWeight.w500),
+        const TextStyle(fontSize: AppTypo.fontBodyMD, fontWeight: FontWeight.w500),
     unselectedLabelStyle:
-        const TextStyle(fontSize: Typo.fontBodyMD, fontWeight: FontWeight.w400),
+        const TextStyle(fontSize: AppTypo.fontBodyMD, fontWeight: FontWeight.w400),
   );
 
   static final darkTabBarTheme = TabBarTheme(
@@ -23,8 +23,8 @@ class AppTabBarTheme {
     labelColor: AppColors.onPrimaryDark,
     unselectedLabelColor: AppColors.disabled,
     labelStyle:
-        const TextStyle(fontSize: Typo.fontBodyMD, fontWeight: FontWeight.w500),
+        const TextStyle(fontSize: AppTypo.fontBodyMD, fontWeight: FontWeight.w500),
     unselectedLabelStyle:
-        const TextStyle(fontSize: Typo.fontBodyMD, fontWeight: FontWeight.w400),
+        const TextStyle(fontSize: AppTypo.fontBodyMD, fontWeight: FontWeight.w400),
   );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppPopupMenuButtonTheme {
   AppPopupMenuButtonTheme._();
@@ -10,7 +10,7 @@ class AppPopupMenuButtonTheme {
     color: AppColors.onSecondaryLight,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
     textStyle:
-        TextStyle(color: AppColors.onPrimaryLight, fontSize: Typo.fontBodySM),
+        TextStyle(color: AppColors.onPrimaryLight, fontSize: AppTypo.fontBodySM),
     elevation: 4.0,
   );
 
@@ -18,7 +18,7 @@ class AppPopupMenuButtonTheme {
     color: AppColors.surfaceDark,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
     textStyle:
-        TextStyle(color: AppColors.onPrimaryDark, fontSize: Typo.fontBodySM),
+        TextStyle(color: AppColors.onPrimaryDark, fontSize: AppTypo.fontBodySM),
     elevation: 4.0,
   );
 }

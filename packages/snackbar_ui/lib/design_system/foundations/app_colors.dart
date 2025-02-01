@@ -6,11 +6,11 @@ class AppColors {
   AppColors._();
 
   //Light
-  static const Color backgroundLight = BaseColors.white;
-  static const Color surfaceLight = BaseColors.softWhite;
+  static const Color backgroundLight = BaseColors.softWhite;
+  static const Color surfaceLight = BaseColors.white ;
   static const Color primaryLight = BaseColors.redPink;
-  static const Color onPrimaryLight = BaseColors.deepGrey;
-  static const Color onSecondaryLight = BaseColors.softWhite;
+  static const Color onPrimaryLight = BaseColors.softWhite;
+  static const Color onSecondaryLight = BaseColors.deepGrey;
   static const Color accentLight = BaseColors.redPink;
 
   //Dark

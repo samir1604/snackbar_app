@@ -4,7 +4,6 @@ import '../../type_def/type_definition.dart';
 import '../atoms/atoms.dart';
 import '../foundations/foundations.dart';
 
-
 /// {@template app_labeled_text_input}
 /// Una molécula que combina una etiqueta con un campo de texto, facilitando la
 /// entrada de información por parte del usuario.
@@ -17,13 +16,15 @@ class AppLabeledTextInput extends StatelessWidget {
     this.hintText,
     this.controller,
     this.keyboardType,
-    this.obscureText = false,
+    this.prefixIcon,
     this.suffixIcon,
     this.onChanged,
     this.onSubmitted,
     this.validator,
-    this.isDarkMode = false,
     this.labelStyle,
+    this.focusNode,
+    this.obscureText = false,
+    this.isDarkMode = false,
   });
 
   /// Texto que se muestra como etiqueta encima del campo de texto.
@@ -41,8 +42,20 @@ class AppLabeledTextInput extends StatelessWidget {
   ///Define si el texto debe estar oculto (ej: para contraseñas).
   final bool obscureText;
 
+  /// Icono a mostrar al principio del input
+  final Widget? prefixIcon;
+
   /// Icono a mostrar al final del input
   final Widget? suffixIcon;
+
+  /// Permite definir un estilo de texto para el label
+  final TextStyle? labelStyle;
+
+  /// Permite especificar un focus a la instancia
+  final FocusNode? focusNode;
+
+  /// Tipo definido para agregar una validacion al formulario
+  final FormValidator<String>? validator;
 
   /// Metodo que se ejecuta cuando cambie el valor del cuadro de texto
   final ValueChanged<String>? onChanged;
@@ -53,13 +66,9 @@ class AppLabeledTextInput extends StatelessWidget {
   /// Permite definir si estamos en modo oscuro o no
   final bool isDarkMode;
 
-  /// Permite definir un estilo de texto para el label
-  final TextStyle? labelStyle;
-
-  final FormValidator<String> validator;
-
   @override
   Widget build(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppText(
@@ -72,11 +81,13 @@ class AppLabeledTextInput extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             obscureText: obscureText,
+            prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             onChanged: onChanged,
             onSubmitted: onSubmitted,
             validator: validator,
             isDarkMode: isDarkMode,
+            focusNode: focusNode,
           ),
         ],
       );

@@ -117,6 +117,25 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  fonts:
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/Gilroy-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Gilroy-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Gilroy-RegularItalic.ttf
+          style: italic
+        - asset: assets/fonts/Gilroy-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Gilroy-MediumItalic.ttf
+          style: italic
+        - asset: assets/fonts/Gilroy-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Gilroy-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Gilroy-ExtraBold.ttf
+          weight: 800
 
 scripts:
   gen_files: fvm dart run build_runner build --delete-conflicting-outputs

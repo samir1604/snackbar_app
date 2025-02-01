@@ -19,6 +19,7 @@ class AppButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.buttonColor,
+    this.focusNode,
     this.isDarkMode = false,
   });
 
@@ -43,12 +44,17 @@ class AppButton extends StatelessWidget {
   ///Define el modo de la app
   final bool isDarkMode;
 
+  /// Manejar el foco
+  final FocusNode? focusNode;
+
   @override
   Widget build(BuildContext context) => switch (type) {
         ButtonType.elevated => ElevatedButton(
+            focusNode: focusNode,
             onPressed: isLoading ? null : onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: buttonColor ??  (isDarkMode ? AppColors.primaryDark : AppColors.primaryLight),
+              backgroundColor: buttonColor ??
+                  (isDarkMode ? AppColors.primaryDark : AppColors.primaryLight),
               padding: EdgeInsets.symmetric(
                   horizontal: AppSizes.buttonPaddingHorizontal,
                   vertical: AppSizes.buttonPaddingVertical),
@@ -69,14 +75,19 @@ class AppButton extends StatelessWidget {
                         height: 15,
                         width: 15,
                         child: CircularProgressIndicator(
-                          color: isDarkMode ? AppColors.onPrimaryDark : AppColors.onPrimaryLight,
+                          color: isDarkMode
+                              ? AppColors.onPrimaryDark
+                              : AppColors.onPrimaryLight,
                         ),
                       )
-                    : AppText(text: text, style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
+                    : AppText(
+                        text: text,
+                        style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
               ],
             ),
           ),
         ButtonType.outlined => OutlinedButton(
+            focusNode: focusNode,
             onPressed: isLoading ? null : onPressed,
             style: OutlinedButton.styleFrom(
               padding: EdgeInsets.symmetric(
@@ -101,11 +112,14 @@ class AppButton extends StatelessWidget {
                           color: AppColors.onPrimaryLight,
                         ),
                       )
-                    :AppText(text: text, style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
+                    : AppText(
+                        text: text,
+                        style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
               ],
             ),
           ),
         ButtonType.text => TextButton(
+            focusNode: focusNode,
             onPressed: isLoading ? null : onPressed,
             style: TextButton.styleFrom(
               padding: EdgeInsets.symmetric(
@@ -130,7 +144,9 @@ class AppButton extends StatelessWidget {
                           color: AppColors.onPrimaryLight,
                         ),
                       )
-                    : AppText(text: text, style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
+                    : AppText(
+                        text: text,
+                        style: AppStyles.bodyMd(isDarkMode: isDarkMode)),
               ],
             ),
           ),

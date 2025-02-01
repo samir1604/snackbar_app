@@ -1,8 +1,8 @@
 import 'package:snackbar_ui/design_system/tokens/tokens.dart';
 
-class Typo {
-  Typo._();
-  static const String family = Typography.familyPoppins;
+class AppTypo {
+  AppTypo._();
+  static const String family = Typography.familyGilroy;
 
   static const double fontTitleH1 = Typography.sizeXXL;
   static const double fontTitleH2 = Typography.sizeXL;

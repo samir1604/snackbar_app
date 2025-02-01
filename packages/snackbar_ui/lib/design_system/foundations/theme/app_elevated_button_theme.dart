@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppElevatedButtonTheme {
   AppElevatedButtonTheme._();
@@ -9,7 +9,7 @@ class AppElevatedButtonTheme {
       style: ElevatedButton.styleFrom(
           enabledMouseCursor: SystemMouseCursors.click,
           shadowColor: AppColors.shadowGrey,
-          side: const BorderSide(color: AppColors.onPrimaryLight),
+          side: BorderSide(color: AppColors.redShade800!),
           backgroundColor: WidgetStateColor.resolveWith((states) =>
               states.contains(WidgetState.disabled)
                   ? AppColors.disabled.withOpacity(.5)
@@ -23,7 +23,7 @@ class AppElevatedButtonTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           textStyle: const TextStyle(
-              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+              fontSize: AppTypo.fontBodySM, fontWeight: FontWeight.w500),
           overlayColor: WidgetStateColor.resolveWith(
             (states) => states.contains(WidgetState.pressed)
                 ? AppColors.black12
@@ -48,7 +48,7 @@ class AppElevatedButtonTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           textStyle: const TextStyle(
-              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+              fontSize: AppTypo.fontBodySM, fontWeight: FontWeight.w500),
           overlayColor: WidgetStateColor.resolveWith(
             (states) => states.contains(WidgetState.pressed)
                 ? AppColors.white12

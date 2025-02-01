@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppOutlinedButtonTheme {
   AppOutlinedButtonTheme._();
@@ -27,7 +27,7 @@ class AppOutlinedButtonTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           textStyle: const TextStyle(
-              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+              fontSize: AppTypo.fontBodySM, fontWeight: FontWeight.w500),
           overlayColor: WidgetStateColor.resolveWith(
             (states) => states.contains(WidgetState.pressed)
                 ? AppColors.black12
@@ -55,7 +55,7 @@ class AppOutlinedButtonTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           textStyle: const TextStyle(
-              fontSize: Typo.fontBodySM, fontWeight: FontWeight.w500),
+              fontSize: AppTypo.fontBodySM, fontWeight: FontWeight.w500),
           overlayColor: WidgetStateColor.resolveWith(
             (states) => states.contains(WidgetState.pressed)
                 ? AppColors.white12

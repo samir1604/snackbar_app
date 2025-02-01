@@ -87,6 +87,10 @@ class AppIcon extends StatelessWidget {
       {super.key, this.color, this.size, this.isDarkMode = false})
       : icon = Icons.person;
 
+  const AppIcon.password(
+      {super.key, this.color, this.size, this.isDarkMode = false})
+      : icon = Icons.lock_open_outlined;
+
   const AppIcon.shoppingCart(
       {super.key, this.color, this.size, this.isDarkMode = false})
       : icon = Icons.shopping_cart;
@@ -102,6 +106,14 @@ class AppIcon extends StatelessWidget {
   const AppIcon.call(
       {super.key, this.color, this.size, this.isDarkMode = false})
       : icon = Icons.call;
+
+  const AppIcon.visible(
+      {super.key, this.color, this.size, this.isDarkMode = false})
+      : icon = Icons.visibility;
+
+  const AppIcon.unVisible(
+      {super.key, this.color, this.size, this.isDarkMode = false})
+      : icon = Icons.visibility_off;
 
   final IconData icon;
   final Color? color;

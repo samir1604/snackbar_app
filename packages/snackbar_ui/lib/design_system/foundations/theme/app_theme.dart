@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:snackbar_ui/design_system/foundations/theme/app_text_selection_theme.dart';
 
-import 'package:snackbar_ui/design_system/foundations/theme/app_card_theme.dart';
-import 'package:snackbar_ui/design_system/foundations/theme/app_floating_action_button_theme.dart';
-import 'package:snackbar_ui/design_system/foundations/theme/app_popup_menu_button_theme.dart';
-import 'package:snackbar_ui/design_system/foundations/theme/app_slider_theme.dart';
-import 'package:snackbar_ui/design_system/foundations/theme/app_tab_bar_theme.dart';
-
-import '../app_colors.dart';
+import '../foundations.dart';
 import 'app_bar_theme.dart';
 import 'app_bottom_sheet_theme.dart';
+import 'app_card_theme.dart';
 import 'app_checkbox_theme.dart';
 import 'app_chip_theme.dart';
 import 'app_color_scheme.dart';
 import 'app_dialog_theme.dart';
 import 'app_elevated_button_theme.dart';
-import 'app_outlined_button_theme.dart';
-import 'app_text_theme.dart';
+import 'app_floating_action_button_theme.dart';
 import 'app_input_decoration_theme.dart';
+import 'app_outlined_button_theme.dart';
+import 'app_popup_menu_button_theme.dart';
+import 'app_slider_theme.dart';
+import 'app_tab_bar_theme.dart';
+import 'app_text_theme.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    fontFamily: AppTypo.family,
     brightness: Brightness.light,
     primaryColor: AppColors.primaryLight,
     scaffoldBackgroundColor: AppColors.backgroundLight,
@@ -44,11 +44,12 @@ class AppTheme {
     popupMenuTheme: AppPopupMenuButtonTheme.lightPopupMenuButtonTheme,
     sliderTheme: AppSliderTheme.lightSliderTheme,
     tabBarTheme: AppTabBarTheme.lightTabBarTheme,
+    textSelectionTheme: AppTextSelectionTheme.lightTextSelection,
   );
 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    fontFamily: AppTypo.family,
     brightness: Brightness.dark,
     primaryColor: AppColors.primaryDark,
     scaffoldBackgroundColor: AppColors.backgroundDark,
@@ -69,5 +70,6 @@ class AppTheme {
     popupMenuTheme: AppPopupMenuButtonTheme.darkPopupMenuButtonTheme,
     sliderTheme: AppSliderTheme.darkSliderTheme,
     tabBarTheme: AppTabBarTheme.darkTabBarTheme,
+    textSelectionTheme: AppTextSelectionTheme.darkTextSelection,
   );
 }

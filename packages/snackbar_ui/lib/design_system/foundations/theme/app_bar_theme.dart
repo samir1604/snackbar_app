@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppThemeBar {
   AppThemeBar._();
@@ -15,7 +15,7 @@ class AppThemeBar {
     iconTheme: IconThemeData(color: AppColors.onPrimaryLight),
     actionsIconTheme: IconThemeData(color: AppColors.onPrimaryLight),
     titleTextStyle: TextStyle(
-      fontSize: Typo.fontBodyMD,
+      fontSize: AppTypo.fontBodyMD,
       fontWeight: FontWeight.w500,
       color: AppColors.onPrimaryLight,
     ),
@@ -30,7 +30,7 @@ class AppThemeBar {
     iconTheme: IconThemeData(color: AppColors.onPrimaryDark),
     actionsIconTheme: IconThemeData(color: AppColors.onPrimaryDark),
     titleTextStyle: TextStyle(
-      fontSize: Typo.fontBodyMD,
+      fontSize: AppTypo.fontBodyMD,
       fontWeight: FontWeight.w500,
       color: AppColors.onPrimaryDark,
     ),

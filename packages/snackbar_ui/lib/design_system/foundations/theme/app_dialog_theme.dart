@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppDialogTheme {
   AppDialogTheme._();
@@ -11,9 +11,9 @@ class AppDialogTheme {
     titleTextStyle: TextStyle(
         color: AppColors.onPrimaryLight,
         fontWeight: FontWeight.w600,
-        fontSize: Typo.fontTitleH3),
+        fontSize: AppTypo.fontTitleH3),
     contentTextStyle:
-        TextStyle(color: AppColors.onPrimaryLight, fontSize: Typo.fontBodyMD),
+        TextStyle(color: AppColors.onPrimaryLight, fontSize: AppTypo.fontBodyMD),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
   );
 
@@ -22,9 +22,9 @@ class AppDialogTheme {
     titleTextStyle: TextStyle(
         color: AppColors.onPrimaryDark,
         fontWeight: FontWeight.w600,
-        fontSize: Typo.fontTitleH3),
+        fontSize: AppTypo.fontTitleH3),
     contentTextStyle:
-        TextStyle(color: AppColors.onPrimaryDark, fontSize: Typo.fontBodyMD),
+        TextStyle(color: AppColors.onPrimaryDark, fontSize: AppTypo.fontBodyMD),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
   );
 }

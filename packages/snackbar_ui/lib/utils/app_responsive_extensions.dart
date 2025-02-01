@@ -127,7 +127,8 @@ extension AppResponsiveExtensions on BuildContext {
 
   T responsive<T>(T defaultVal, [Map<double, T>? breakpoints]) {
     return breakpoints?.entries
-            .firstWhere((entry) => width >= entry.key)
+            .firstWhere((entry) => width >= entry.key,
+                orElse: () => MapEntry(0, defaultVal))
             .value ??
         defaultVal;
   }

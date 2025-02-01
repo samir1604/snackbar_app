@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
-import '../typo.dart';
+import '../app_typo.dart';
 
 class AppInputDecorationTheme {
   AppInputDecorationTheme._();
@@ -17,15 +17,16 @@ class AppInputDecorationTheme {
     filled: true,
     fillColor: AppColors.surfaceLight,
     labelStyle: _createTextStyle(
-      Typo.fontBodySM,
+      AppTypo.fontBodySM,
       fontWeight: FontWeight.normal,
       fontColor: AppColors.onPrimaryLight,
     ),
-    floatingLabelStyle:
-        _createTextStyle(Typo.fontLabelXS, fontColor: AppColors.primaryLight),
-    hintStyle: _createTextStyle(Typo.fontBodySM, fontColor: AppColors.disabled),
+    floatingLabelStyle: _createTextStyle(AppTypo.fontLabelXS,
+        fontColor: AppColors.primaryLight),
+    hintStyle:
+        _createTextStyle(AppTypo.fontBodySM, fontColor: AppColors.disabled),
     errorStyle:
-        _createTextStyle(Typo.fontLabelXS, fontColor: AppColors.redShade800),
+        _createTextStyle(AppTypo.fontLabelXS, fontColor: AppColors.redShade800),
     contentPadding:
         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
     iconColor: AppColors.disabled,
@@ -43,15 +44,16 @@ class AppInputDecorationTheme {
     filled: true,
     fillColor: AppColors.surfaceLight,
     labelStyle: _createTextStyle(
-      Typo.fontBodySM,
+      AppTypo.fontBodySM,
       fontWeight: FontWeight.normal,
       fontColor: AppColors.onPrimaryDark,
     ),
     floatingLabelStyle:
-        _createTextStyle(Typo.fontLabelXS, fontColor: AppColors.primaryDark),
-    hintStyle: _createTextStyle(Typo.fontBodySM, fontColor: AppColors.disabled),
+        _createTextStyle(AppTypo.fontLabelXS, fontColor: AppColors.primaryDark),
+    hintStyle:
+        _createTextStyle(AppTypo.fontBodySM, fontColor: AppColors.disabled),
     errorStyle:
-        _createTextStyle(Typo.fontLabelXS, fontColor: AppColors.redShade800),
+        _createTextStyle(AppTypo.fontLabelXS, fontColor: AppColors.redShade800),
     contentPadding:
         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
     iconColor: AppColors.disabled,
