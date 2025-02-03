@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:snackbar_ui/design_system/design_system.dart';
+import 'package:snackbar_ui/utils/app_responsive_extensions.dart';
+
+import '../../../../../gen/assets.gen.dart';
+import '../../../../common/common.dart';
+import '../validators/login_validators.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key, this.onSubmit});
@@ -39,28 +45,22 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           AppImageAsset(
-            assetPath: 'assets/images/logo-black.png',
-            width: AppSizes.imageCarouselHeight,
-            height: AppSizes.imageCarouselHeight,
+            assetPath: Assets.images.logoBlack.keyName,
+            width: context.blockSizeHorizontal(60),
             fit: BoxFit.contain,
           ),
           AppLabeledTextInput(
-            labelText: 'Nombre de Usuario',
+            labelText: TextStrings.labelUsername,
             controller: _usernameController,
             keyboardType: TextInputType.text,
             focusNode: _focusName,
             prefixIcon: AppIcon.person(),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Ingrese un nombre';
-              }
-              return null;
-            },
+            validator: LoginValidators.userValidator,
             onSubmitted: (_) => _focusPass.requestFocus(),
           ),
           SizedBox(height: AppSizes.spaceBtwInputField),
           AppLabeledTextInput(
-            labelText: 'Contraseña',
+            labelText: TextStrings.labelPassword,
             controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
             obscureText: isPassVisible,
@@ -70,18 +70,13 @@ class _LoginFormState extends State<LoginForm> {
               child: isPassVisible ? AppIcon.visible() : AppIcon.unVisible(),
               onTap: () => setState(() => isPassVisible = !isPassVisible),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Ingrese una contraseña';
-              }
-              return null;
-            },
+            validator: LoginValidators.passValidator,
             onSubmitted: (_) => _loginButton.requestFocus(),
           ),
           Padding(
             padding: EdgeInsets.only(top: AppSizes.md, bottom: AppSizes.sm),
             child: AppButton(
-              text: 'Iniciar',
+              text: TextStrings.buttonLogin,
               focusNode: _loginButton,
               onPressed: () {
                 if (_formKey.currentState!.validate()) {

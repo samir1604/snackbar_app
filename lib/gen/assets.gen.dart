@@ -29,12 +29,16 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/header-image.jpeg
-  AssetGenImage get headerImage =>
-      const AssetGenImage('assets/images/header-image.jpeg');
+  /// File path: assets/images/logo-black.png
+  AssetGenImage get logoBlack =>
+      const AssetGenImage('assets/images/logo-black.png');
+
+  /// File path: assets/images/logo-white.png
+  AssetGenImage get logoWhite =>
+      const AssetGenImage('assets/images/logo-white.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [headerImage];
+  List<AssetGenImage> get values => [logoBlack, logoWhite];
 }
 
 class Assets {
