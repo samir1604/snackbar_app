@@ -1,5 +1,3 @@
-import 'package:snackbar_ui/snackbar_ui.dart';
-
 import '../../../../common/common.dart';
 
 class LoginValidators {

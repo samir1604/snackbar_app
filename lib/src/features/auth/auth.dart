@@ -14,7 +14,7 @@ export 'data/repositories/auth_remote_repository.dart';
 //*** Domain ***//
 
 // Entities
-export 'domain/entities/user_model.dart';
+export 'domain/entities/user.dart';
 
 // Params
 export 'domain/params/login_params.dart';

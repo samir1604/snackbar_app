@@ -34,7 +34,7 @@ void initServiceLocator() {
       () => AuthRemoteRepository(AuthApi(getIt<Dio>())));
 
   //Use Cases
-  getIt.registerLazySingleton<UseCase<UserModel, LoginParams>>(
+  getIt.registerLazySingleton<UseCase<User, LoginParams>>(
     () => LoginUseCase(
       getIt<AuthRepository>(),
       getIt<SecureStorage>(),
@@ -42,5 +42,5 @@ void initServiceLocator() {
   );
 
   getIt.registerLazySingleton<LoginViewModel>(
-      () => LoginViewModel(getIt<UseCase<UserModel, LoginParams>>()));
+      () => LoginViewModel(getIt<UseCase<User, LoginParams>>()));
 }

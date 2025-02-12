@@ -51,7 +51,6 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) => switch (type) {
         ButtonType.elevated => ElevatedButton(
             focusNode: focusNode,
-            onPressed: isLoading ? null : onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: buttonColor ??
                   (isDarkMode ? AppColors.primaryDark : AppColors.primaryLight),
@@ -62,6 +61,7 @@ class AppButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppSizes.buttonRadius)),
             ),
+            onPressed: isLoading ? null : onPressed,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -88,7 +88,6 @@ class AppButton extends StatelessWidget {
           ),
         ButtonType.outlined => OutlinedButton(
             focusNode: focusNode,
-            onPressed: isLoading ? null : onPressed,
             style: OutlinedButton.styleFrom(
               padding: EdgeInsets.symmetric(
                   horizontal: AppSizes.buttonPaddingHorizontal,
@@ -96,6 +95,7 @@ class AppButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppSizes.buttonRadius)),
             ),
+            onPressed: isLoading ? null : onPressed,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -120,7 +120,6 @@ class AppButton extends StatelessWidget {
           ),
         ButtonType.text => TextButton(
             focusNode: focusNode,
-            onPressed: isLoading ? null : onPressed,
             style: TextButton.styleFrom(
               padding: EdgeInsets.symmetric(
                   horizontal: AppSizes.buttonPaddingHorizontal,
@@ -128,6 +127,7 @@ class AppButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppSizes.buttonRadius)),
             ),
+            onPressed: isLoading ? null : onPressed,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

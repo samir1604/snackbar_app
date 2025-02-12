@@ -1,7 +1,9 @@
+import '../../core/models/environment.dart';
+
 class NetworkSettings {
   NetworkSettings._();
 
-  static const String baseUrl = 'https://wwww.example.com';
+  static String baseUrl = Environment.apiBaseUrl;
 
   static Duration get connectTimeout => Duration(seconds: 60);
 

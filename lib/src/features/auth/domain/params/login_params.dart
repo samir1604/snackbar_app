@@ -1,14 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final class LoginParams extends Equatable {
-  const LoginParams(this.username, this.password);
+part 'login_params.freezed.dart';
 
-  final String username;
-  final String password;
+part 'login_params.g.dart';
 
-  @override
-  List<Object?> get props => [
-        username,
-        password,
-      ];
+@freezed
+class LoginParams with _$LoginParams {
+  const LoginParams._();
+
+  const factory LoginParams({
+    @JsonKey(name: 'username') required String username,
+    @JsonKey(name: 'password') required String password,
+  }) = _LoginParams;
+
+  factory LoginParams.fromJson(Map<String, Object?> json) =>
+      _$LoginParamsFromJson(json);
 }

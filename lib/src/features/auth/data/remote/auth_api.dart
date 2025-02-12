@@ -11,5 +11,5 @@ abstract class AuthApi {
   factory AuthApi(Dio dio) => _AuthApi(dio);
   
   @POST(EndpointStrings.loginEndpoint)
-  Future<LoginResponse> login(@Body() LoginRequest data);
+  Future<LoginResponse> login(@Body() LoginParams data);
 }
