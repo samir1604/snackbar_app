@@ -22,13 +22,13 @@ class _AuthApi implements AuthApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<LoginResponse> login(LoginParams data) async {
+  Future<LoginModel> login(LoginParams data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(data.toJson());
-    final _options = _setStreamType<LoginResponse>(Options(
+    final _options = _setStreamType<LoginModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -45,9 +45,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LoginResponse _value;
+    late LoginModel _value;
     try {
-      _value = LoginResponse.fromJson(_result.data!);
+      _value = LoginModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

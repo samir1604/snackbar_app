@@ -1,9 +1,9 @@
-import '../../features/auth/data/models/response/refresh_token_response.dart';
+import '../../features/auth/data/models/refresh_token_model.dart';
 
 abstract interface class TokenServices {
-  Future<String?> getAccessToken();
-  Future<String?> getRefreshToken();
-  Future<RefreshTokenResponse> refreshToken(String? refreshToken);
-  Future<void> saveTokens(String accessToken, String refreshToken);
-  Future<void> clearTokens();
+  Future<String?> getStorageAccessToken();
+  Future<String?> getStorageRefreshToken();
+  Future<RefreshTokenModel> getRefreshToken(String userId, String? refreshToken);
+  Future<void> saveTokensToStorage(String accessToken, String refreshToken);
+  Future<void> clearStorageTokens();
 }

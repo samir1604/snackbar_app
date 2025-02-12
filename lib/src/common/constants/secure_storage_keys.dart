@@ -1,7 +1,7 @@
 class SecureStorageKeys {
   SecureStorageKeys._();
 
-  static const String accessTokenKey = 'accessToken';
-  static const String refreshTokenKey = 'refreshToken';
-  static const String userKey= 'user';
+  static const String accessTokenStorageKey = 'accessToken';
+  static const String refreshTokenStorageKey = 'refreshToken';
+  static const String profileStorageKey= 'profile';
 }

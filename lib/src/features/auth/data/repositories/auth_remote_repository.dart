@@ -10,7 +10,7 @@ final class AuthRemoteRepository implements AuthRepository {
   final AuthApi _authApi;
 
   @override
-  Future<LoginResponse> login({required LoginParams params}) async {
+  Future<LoginModel> login({required LoginParams params}) async {
     try {
       return await _authApi.login(params);
     } on DioException catch (e, stackTrace) {

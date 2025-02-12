@@ -17,15 +17,15 @@ class LoginUseCase implements UseCase<User, LoginParams> {
       {required LoginParams params}) async {
     try {
       final response = await _repository.login(params: params);
-      final user = response.toUser();
+      final user = response.mapTo();
 
       await Future.wait([
-        _storage.write(SecureStorageKeys.accessTokenKey, response.accessToken),
-        _storage.write(SecureStorageKeys.refreshTokenKey, response.accessToken),
-        _storage.write(SecureStorageKeys.userKey, jsonEncode(user)),
+        _storage.write(SecureStorageKeys.accessTokenStorageKey, response.accessToken),
+        _storage.write(SecureStorageKeys.refreshTokenStorageKey, response.accessToken),
+        _storage.write(SecureStorageKeys.profileStorageKey, jsonEncode(user)),
       ]);
 
-      return Success(response.toUser());
+      return Success(response.mapTo());
     } on HttpClientException catch (e) {
       return Error(e);
     } catch (e, stackTrace) {

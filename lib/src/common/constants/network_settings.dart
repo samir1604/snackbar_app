@@ -1,4 +1,4 @@
-import '../../core/models/environment.dart';
+import '../../core/core.dart';
 
 class NetworkSettings {
   NetworkSettings._();

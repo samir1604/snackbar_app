@@ -6,13 +6,18 @@ import '../common/common.dart';
 import '../features/auth/auth.dart';
 
 import 'core.dart';
+import 'local/profile_services_impl.dart';
+import 'services/profile_services.dart';
 
 final getIt = GetIt.instance;
 
 void initServiceLocator() {
-  //Core
+  /// Core Services
   getIt.registerLazySingleton<SecureStorage>(() => SecureStorageService());
+  getIt.registerLazySingleton<ProfileServices>(
+      () => ProfileServicesImpl(getIt<SecureStorage>()));
 
+  /// Connection
   getIt.registerLazySingleton<Dio>(() {
     final Dio dio = Dio(BaseOptions(
       baseUrl: NetworkSettings.baseUrl,
@@ -22,18 +27,19 @@ void initServiceLocator() {
     ));
     dio.interceptors.addAll([
       HttpFormatter(loggingFilter: (_, __, ___) => true),
-      NetworkInterceptor(dio, TokenServiceImpl(dio, getIt<SecureStorage>())),
+      NetworkInterceptor(dio, TokenServiceImpl(dio, getIt<SecureStorage>()),
+          getIt<ProfileServices>()),
     ]);
 
     return dio;
   });
 
-  //Repositories
+  /// Repositories
   //getIt.registerLazySingleton<TableServices>(() => TableServices());
   getIt.registerLazySingleton<AuthRepository>(
       () => AuthRemoteRepository(AuthApi(getIt<Dio>())));
 
-  //Use Cases
+  /// Use Cases
   getIt.registerLazySingleton<UseCase<User, LoginParams>>(
     () => LoginUseCase(
       getIt<AuthRepository>(),
@@ -41,6 +47,7 @@ void initServiceLocator() {
     ),
   );
 
-  getIt.registerLazySingleton<LoginViewModel>(
+  /// View Models
+  getIt.registerFactory<LoginViewModel>(
       () => LoginViewModel(getIt<UseCase<User, LoginParams>>()));
 }

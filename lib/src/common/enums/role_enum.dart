@@ -3,7 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 enum Role {
   @JsonValue('Administrador')
   administrator('Administrador'),
-  clerk('Dependiente');
+  @JsonValue('Dependiente')
+  clerk('Dependiente'),
+  @JsonValue('Cajero')
+  cashier('Cajero'),
+  @JsonValue('Economico')
+  economic('Economico'),
+  @JsonValue('Consultor')
+  consult('Consultor');
 
   static String toJson(Role rol) => rol.value;
 
