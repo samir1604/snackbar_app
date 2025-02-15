@@ -1,4 +1,4 @@
-import '../../core/core.dart';
+import '../../../core/core.dart';
 
 class NetworkSettings {
   NetworkSettings._();
@@ -18,7 +18,4 @@ class NetworkSettings {
 
   static const String authorizationKey = 'Authorization';
   static const String refreshTokenKey = 'refreshToken';
-
-  // HttpStatus doesn't have the code Invalid Token
-  static const int invalidToken = 498;
 }

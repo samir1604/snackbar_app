@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../../common/constants/endpoint_strings.dart';
+import '../../../../common/constants/network/endpoint_strings.dart';
 import '../../auth.dart';
 
 part 'auth_api.g.dart';

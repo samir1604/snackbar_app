@@ -17,7 +17,7 @@ final class AuthRemoteRepository implements AuthRepository {
       throw e.toHttpClientException(stackTrace);
     } catch (e, stackTrace) {
       throw HttpClientException(
-        message: HttpExceptionMessages.internalServerError500,
+        message: HttpStatusMessages.internalServerError500,
         exception: e as Exception,
         stackTrace: stackTrace,
       );

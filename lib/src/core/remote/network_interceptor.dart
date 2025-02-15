@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../common/common.dart';
+import '../../common/constants/network/http_status_code.dart';
 import '../../features/auth/auth.dart';
 import '../core.dart';
 
@@ -63,9 +64,9 @@ final class NetworkInterceptor extends Interceptor {
 
         return handler.resolve(await _dio.fetch(err.requestOptions));
       } on DioException catch (e) {
-        if (e.response?.statusCode == NetworkSettings.invalidToken) {
+        if (e.response?.statusCode == HttpStatusCode.invalidToken) {
           await _tokenServices.clearStorageTokens();
-          err.response?.statusCode == NetworkSettings.invalidToken;
+          err.response?.statusCode == HttpStatusCode.invalidToken;
           return handler.next(err);
         }
         return handler.next(err);

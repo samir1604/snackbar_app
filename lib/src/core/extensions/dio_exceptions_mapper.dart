@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../common/common.dart';
+import '../../common/constants/network/http_status_code.dart';
 import '../core.dart';
 
 extension DioExceptionsMapper on DioException {
@@ -54,13 +55,13 @@ extension DioExceptionsMapper on DioException {
 
   String _getMessageForStatusCode(int? statusCode) {
     return switch (statusCode) {
-      HttpStatus.badRequest => HttpExceptionMessages.badRequest400,
-      HttpStatus.unauthorized => HttpExceptionMessages.unauthorized401,
-      HttpStatus.forbidden => HttpExceptionMessages.forbidden403,
-      HttpStatus.notFound => HttpExceptionMessages.notFound404,
-      HttpStatus.internalServerError => HttpExceptionMessages.internalServerError500,
-      HttpStatus.serviceUnavailable => HttpExceptionMessages.serviceUnavailable503,
-      NetworkSettings.invalidToken => HttpExceptionMessages.invalidToken489,
+      HttpStatusCode.badRequest => HttpStatusMessages.badRequest400,
+      HttpStatusCode.unauthorized => HttpStatusMessages.unauthorized401,
+      HttpStatusCode.forbidden => HttpStatusMessages.forbidden403,
+      HttpStatusCode.notFound => HttpStatusMessages.notFound404,
+      HttpStatusCode.internalServerError => HttpStatusMessages.internalServerError500,
+      HttpStatusCode.serviceUnavailable => HttpStatusMessages.serviceUnavailable503,
+      HttpStatusCode.invalidToken => HttpStatusMessages.invalidToken498,
       _ => 'Unknown error. Please try again later'
     };
   }

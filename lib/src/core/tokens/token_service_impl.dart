@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../../common/constants/endpoint_strings.dart';
-import '../../common/constants/network_settings.dart';
+import '../../common/constants/network/endpoint_strings.dart';
+import '../../common/constants/network/network_settings.dart';
 import '../../common/constants/secure_storage_keys.dart';
 import '../../features/auth/data/models/refresh_token_model.dart';
 import '../services/secure_storage.dart';
