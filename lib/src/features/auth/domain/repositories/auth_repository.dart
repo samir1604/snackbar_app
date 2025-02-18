@@ -1,5 +1,6 @@
+import '../../../../core/core.dart';
 import '../../auth.dart';
 
 abstract interface class AuthRepository {
-  Future<LoginModel> login({required LoginParams params});
+  FResult<LoginModel, HttpFailure> login({required LoginParams params});
 }

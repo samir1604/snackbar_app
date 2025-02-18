@@ -10,3 +10,4 @@ export 'constants/network/rfc_urls.dart';
 export 'constants/images_string.dart';
 export 'constants/secure_storage_keys.dart';
 export 'constants/text_strings.dart';
+export 'styles/styles.dart';

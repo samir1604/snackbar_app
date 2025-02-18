@@ -4,24 +4,27 @@ import '../../common/common.dart';
 import '../core.dart';
 
 extension DioToHttpFailure on DioException {
-  static const String title = 'Ocurrio una excepsión';
+  HttpFailure mapToHttpFailure(StackTrace? trace) {
+    final tracInfo = trace.toString().split('\n').first;
 
-  HttpFailure mapToHttpFailure() {
     if (type == DioExceptionType.badResponse) {
       return HttpFailure(
-          type: _getHttpType(response?.statusCode ?? HttpStatusCode.badRequest),
-          title: title,
-          status: response?.statusCode ?? HttpStatusCode.badRequest,
-          detail: response?.statusMessage ??
-              _getStatusMessage(
-                  response?.statusCode ?? HttpStatusCode.badRequest));
+        type: _getHttpType(response?.statusCode ?? HttpStatusCode.badRequest),
+        title: TextStrings.titleException,
+        status: response?.statusCode ?? HttpStatusCode.badRequest,
+        detail: response?.statusMessage ??
+            _getStatusMessage(
+                response?.statusCode ?? HttpStatusCode.badRequest),
+        traceId: tracInfo,
+      );
     }
 
     return HttpFailure(
       type: _getDioType(type),
-      title: title,
+      title: TextStrings.titleException,
       status: _getStatusCodeFromDioType(type),
       detail: message ?? _getStatusMessageFromDioType(type),
+      traceId: tracInfo,
     );
   }
 

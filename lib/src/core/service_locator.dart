@@ -36,8 +36,8 @@ void initServiceLocator() {
 
   /// Repositories
   //getIt.registerLazySingleton<TableServices>(() => TableServices());
-  getIt.registerLazySingleton<AuthRepository>(
-      () => AuthRemoteRepository(AuthApi(getIt<Dio>())));
+  getIt.registerLazySingleton<AuthRepository>(() =>
+      AuthRemoteRepository(AuthApi(getIt<Dio>(), NetworkSettings.baseUrl)));
 
   /// Use Cases
   getIt.registerLazySingleton<UseCase<User, LoginParams>>(

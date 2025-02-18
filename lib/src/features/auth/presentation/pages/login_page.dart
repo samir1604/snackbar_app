@@ -1,15 +1,13 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:snackbar_ui/snackbar_ui.dart';
 
 import '../../../../../gen/assets.gen.dart';
-import '../../../../core/contracts/use_case.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/service_locator.dart';
 import '../../auth.dart';
-import '../widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

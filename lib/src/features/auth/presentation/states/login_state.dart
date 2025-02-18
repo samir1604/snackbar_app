@@ -16,6 +16,7 @@ class Ok<T> extends LoginState {
 }
 
 class Failure extends LoginState {
-  const Failure(this.message);
+  const Failure(this.title, this.message);
+  final String title;
   final String message;
 }

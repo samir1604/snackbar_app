@@ -2,6 +2,9 @@
 export 'contracts/no_params.dart';
 export 'contracts/use_case.dart';
 
+// Definition
+export 'definition/type_definition.dart';
+
 // Exceptions
 export 'exceptions/http_client_exception.dart';
 

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../common/common.dart';
 import '../core.dart';
 
 part 'http_failure.freezed.dart';
@@ -29,6 +30,13 @@ class HttpFailure with _$HttpFailure {
 
     if (data.isNotEmpty) return HttpFailure.fromJson(data);
 
-    return err.mapToHttpFailure();
+    return err.mapToHttpFailure(err.stackTrace);
   }
+
+  static HttpFailure createInternalServerException(StackTrace? stackTrace) =>
+      HttpFailure(
+          title: TextStrings.titleException,
+          detail: HttpStatusMessages.internalServerError500,
+          status: HttpStatusCode.internalServerError,
+          traceId: stackTrace.toString().split('\n').first);
 }

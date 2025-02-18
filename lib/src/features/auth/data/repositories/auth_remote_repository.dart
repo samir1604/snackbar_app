@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
+import 'dart:io';
 
-import '../../../../common/common.dart';
+import 'package:dio/dio.dart';
+import 'package:multiple_result/multiple_result.dart';
+
 import '../../../../core/core.dart';
 import '../../auth.dart';
 
@@ -10,17 +12,15 @@ final class AuthRemoteRepository implements AuthRepository {
   final AuthApi _authApi;
 
   @override
-  Future<LoginModel> login({required LoginParams params}) async {
+  FResult<LoginModel, HttpFailure> login({required LoginParams params}) async {
     try {
-      return await _authApi.login(params);
+      final result = await _authApi.login(params);
+      return Success(result);
     } on DioException catch (e, stackTrace) {
-      throw e.toHttpClientException(stackTrace);
+      return Error(e.mapToHttpFailure(stackTrace));
     } catch (e, stackTrace) {
-      throw HttpClientException(
-        message: HttpStatusMessages.internalServerError500,
-        exception: e as Exception,
-        stackTrace: stackTrace,
-      );
+      final ex = e as Exception;
+      return Error(HttpFailure.createInternalServerException(stackTrace));
     }
   }
 }

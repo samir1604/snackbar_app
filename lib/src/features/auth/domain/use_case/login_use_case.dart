@@ -13,27 +13,20 @@ class LoginUseCase implements UseCase<User, LoginParams> {
   final SecureStorage _storage;
 
   @override
-  Future<Result<User, HttpClientException>> call(
-      {required LoginParams params}) async {
-    try {
-      final response = await _repository.login(params: params);
-      final user = response.mapTo();
+  FResult<User, HttpFailure> call({required LoginParams params}) async {
 
+    final response = await _repository.login(params: params);
+
+    return response.when((model) async {
       await Future.wait([
-        _storage.write(SecureStorageKeys.accessTokenStorageKey, response.accessToken),
-        _storage.write(SecureStorageKeys.refreshTokenStorageKey, response.accessToken),
-        _storage.write(SecureStorageKeys.profileStorageKey, jsonEncode(user)),
+        _storage.write(
+            SecureStorageKeys.accessTokenStorageKey, model.accessToken),
+        _storage.write(
+            SecureStorageKeys.refreshTokenStorageKey, model.accessToken),
+        _storage.write(
+            SecureStorageKeys.profileStorageKey, jsonEncode(model.mapTo())),
       ]);
-
-      return Success(response.mapTo());
-    } on HttpClientException catch (e) {
-      return Error(e);
-    } catch (e, stackTrace) {
-      return Error(HttpClientException(
-        message: e.toString(),
-        exception: e as Exception,
-        stackTrace: stackTrace,
-      ));
-    }
+      return Success(model.mapTo());
+    }, (failure) => Error(failure));
   }
 }

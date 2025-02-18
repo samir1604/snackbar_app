@@ -5,11 +5,11 @@ class NetworkSettings {
 
   static String baseUrl = Environment.apiBaseUrl;
 
-  static Duration get connectTimeout => Duration(seconds: 60);
+  static Duration get connectTimeout => Duration(seconds: 5);
 
-  static Duration get receiveTimeout => Duration(seconds: 60);
+  static Duration get receiveTimeout => Duration(seconds: 5);
 
-  static Duration get sendTimeout => Duration(seconds: 60);
+  static Duration get sendTimeout => Duration(seconds: 5);
 
   static Map<String, dynamic> get requestOptions => {
         'Content-Type': 'application/json',

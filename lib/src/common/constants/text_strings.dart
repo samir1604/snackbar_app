@@ -16,4 +16,7 @@ class TextStrings {
 
   static const String homeListTitle = 'Categorias';
   static const String homeAppBarTitle = 'Restaurante';
+
+  /// Errors
+ static const String titleException = 'Ocurrio una excepcion';
 }

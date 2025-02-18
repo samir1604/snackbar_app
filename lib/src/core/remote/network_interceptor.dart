@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../common/common.dart';
-import '../../common/constants/network/http_status_code.dart';
 import '../../features/auth/auth.dart';
 import '../core.dart';
 

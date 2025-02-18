@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
 import 'package:snackbar_ui/design_system/design_system.dart';
@@ -5,8 +6,8 @@ import 'package:snackbar_ui/utils/app_responsive_extensions.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../common/common.dart';
+import '../../../../core/core.dart';
 import '../../auth.dart';
-import '../validators/login_validators.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key, required this.model, this.onSuccess});
@@ -81,13 +82,7 @@ class _LoginFormState extends State<LoginForm> {
             padding: EdgeInsets.only(top: AppSizes.md, bottom: AppSizes.sm),
             child: ValueListenableBuilder<LoginState>(
               valueListenable: widget.model.state,
-              builder: (BuildContext context, value, Widget? child) {
-                return switch (value) {
-                  Loading() => _loginButton(true),
-                  Ok<bool>() => _loginButton(false, true),
-                  _ => _loginButton(),
-                };
-              },
+              builder: _renderButton,
             ),
           ),
         ],
@@ -95,19 +90,33 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _loginButton([bool loading = false, bool isOk = false]) {
-    if (isOk && widget.onSuccess != null) {
+  Widget _renderButton(BuildContext context, LoginState value, Widget? child) {
+    debugPrint(value.toString());
+    if (value is Loading) return _loginButton(true);
+    if (value is Ok && widget.onSuccess != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => widget.onSuccess!());
     }
+    if (value is Failure) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => context.showCustomSnackBar(
+                title: value.title,
+                message: value.message,
+                type: ContentType.failure,
+              ));
+    }
+    return _loginButton();
+  }
+
+  Widget _loginButton([bool isLoading = false]) {
+    debugPrint(isLoading.toString());
     return AppButton(
-      isLoading: loading,
+      isLoading: isLoading,
       text: TextStrings.buttonLogin,
       focusNode: _focusLoginButton,
-      icon: isOk ? Icon(Icons.supervised_user_circle) : null,
-      onPressed: () {
+      onPressed: () async {
         if (_formKey.currentState!.validate()) {
           setUnFocus();
-          widget.model.login(
+          await widget.model.login(
             _usernameController.text,
             _passwordController.text,
           );
