@@ -11,12 +11,12 @@ class LoginModel with _$LoginModel {
   const LoginModel._();
 
   const factory LoginModel({
-    @JsonKey(name: 'id') required int id,
+    @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'name') required String name,
     @JsonKey(name: 'username') required String username,
     @JsonKey(name: 'rol', fromJson: Role.fromJson, toJson: Role.toJson) required Role role,
-    @JsonKey(name: 'picture') required String? picture,
-    @JsonKey(name: 'accessToken') required String accessToken,
+    @JsonKey(name: 'picture') String? picture,
+    @JsonKey(name: 'token') required String accessToken,
     @JsonKey(name: 'refreshToken') required String refreshToken,
   }) = _LoginModel;
 
@@ -24,7 +24,7 @@ class LoginModel with _$LoginModel {
       _$LoginModelFromJson(json);
 
   User mapTo() => User(
-    id: id,
+    id: int.parse(id),
     name: name,
     userName: username,
     role: role,

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:snackbar_ui/snackbar_ui.dart';
 
 import '../../common/common.dart';
 import '../../features/auth/auth.dart';
@@ -17,6 +18,7 @@ final class NetworkInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+
     final String token = await _tokenServices.getStorageAccessToken() ?? '';
 
     options.headers.addAll(NetworkSettings.requestOptions);
@@ -46,6 +48,8 @@ final class NetworkInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
+    AppLoggerUtils.error('Dio Error: ${err.message}' ?? 'Dio Error', err.error);
+
     if (err.response?.statusCode == HttpStatus.unauthorized &&
         err.requestOptions.path != EndpointStrings.loginEndpoint) {
       try {
@@ -63,6 +67,9 @@ final class NetworkInterceptor extends Interceptor {
 
         return handler.resolve(await _dio.fetch(err.requestOptions));
       } on DioException catch (e) {
+        AppLoggerUtils.error(
+            'Refresh Token Exception: ${e.message}' ?? 'Dio Error', e.error);
+
         if (e.response?.statusCode == HttpStatusCode.invalidToken) {
           await _tokenServices.clearStorageTokens();
           err.response?.statusCode == HttpStatusCode.invalidToken;

@@ -8,12 +8,12 @@ part of 'login_model.dart';
 
 _$LoginModelImpl _$$LoginModelImplFromJson(Map<String, dynamic> json) =>
     _$LoginModelImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       name: json['name'] as String,
       username: json['username'] as String,
       role: Role.fromJson(json['rol'] as String),
       picture: json['picture'] as String?,
-      accessToken: json['accessToken'] as String,
+      accessToken: json['token'] as String,
       refreshToken: json['refreshToken'] as String,
     );
 
@@ -24,6 +24,6 @@ Map<String, dynamic> _$$LoginModelImplToJson(_$LoginModelImpl instance) =>
       'username': instance.username,
       'rol': Role.toJson(instance.role),
       'picture': instance.picture,
-      'accessToken': instance.accessToken,
+      'token': instance.accessToken,
       'refreshToken': instance.refreshToken,
     };

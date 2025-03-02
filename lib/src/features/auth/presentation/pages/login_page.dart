@@ -1,32 +1,73 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
 import 'package:snackbar_ui/snackbar_ui.dart';
 
 import '../../../../../gen/assets.gen.dart';
 
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../common/common.dart';
+import '../../../../core/core.dart';
 import '../../../../core/service_locator.dart';
 import '../../auth.dart';
+import '../models/login_request.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) => context.responsive(
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final model = getIt<LoginViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    model.state.addListener(_listener);
+  }
+
+  void _listener() {
+    debugPrint('Cambiando el estado: ${model.state.value.toString()}');
+    if (model.state.value is SuccessState<bool>) {
+      debugPrint('Voy a cambiar de pagina');
+    }
+
+    if (model.state.value is FailureState) {
+      final state = model.state.value as FailureState;
+      context.showToast(state.title, state.message, ToastType.error, state.errors);
+      /*
+      context.showCustomSnackBar(
+        title: state.title,
+        message: state.message,
+        errors: state.errors,
+        type: ContentType.failure,
+      );
+
+       */
+    }
+  }
+
+  @override
+  void dispose() {
+    model.state.removeListener(_listener);
+    model.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      context.responsive(
           GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             behavior: HitTestBehavior.opaque,
             child: Scaffold(
               body: Center(
                   child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(AppSizes.md),
-                  child: LoginForm(
-                      model: getIt<LoginViewModel>(),
-                      onSuccess: () => _onSuccess(context)),
-                ),
-              )),
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSizes.md),
+                      child: LoginForm(model: model.state, onSubmit: _onSubmit),
+                    ),
+                  )),
             ),
           ),
           {
@@ -39,9 +80,9 @@ class LoginPage extends StatelessWidget {
                       constraints: context
                           .responsive(const BoxConstraints(maxWidth: 400), {
                         AppScreenSize.tablet:
-                            const BoxConstraints(maxWidth: 500),
+                        const BoxConstraints(maxWidth: 500),
                         AppScreenSize.laptop:
-                            const BoxConstraints(maxWidth: 500),
+                        const BoxConstraints(maxWidth: 500),
                       }),
                       child: Padding(
                         padding: EdgeInsets.all(AppSizes.md),
@@ -64,8 +105,8 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             LoginForm(
-                              model: getIt<LoginViewModel>(),
-                              onSuccess: () => _onSuccess(context),
+                              model: model.state,
+                              onSubmit: _onSubmit,
                             ),
                           ],
                         ),
@@ -75,26 +116,8 @@ class LoginPage extends StatelessWidget {
                 ))
           });
 
-  void _onSuccess(BuildContext context) {
-    ///TODO: Handle Go Router
-    debugPrint('Voy a otra ruta');
-
-    final snackBar = SnackBar(
-      /// need to set following properties for best effect of awesome_snackbar_content
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: 'Ok!',
-        message: 'Success login!',
-        contentType: ContentType.success,
-      ),
-    );
-
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
-
-    context.showCustomSnackBar(title: '', message: '');
+  Future<void> _onSubmit(LoginRequest request) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    await model.login(request.username, request.password);
   }
 }

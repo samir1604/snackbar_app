@@ -15,7 +15,7 @@ enum Role {
   static String toJson(Role rol) => rol.value;
 
   static Role fromJson(String value) =>
-      Role.values.firstWhere((rol) => rol.value == value);
+      Role.values.firstWhere((rol) => rol.name.toUpperCase() == value.toUpperCase());
 
   const Role(this.value);
 

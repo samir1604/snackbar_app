@@ -22,12 +22,13 @@ HttpFailure _$HttpFailureFromJson(Map<String, dynamic> json) {
 mixin _$HttpFailure {
   @JsonKey(name: 'type')
   String? get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'title', defaultValue: 'Exception')
+  @JsonKey(name: 'title')
   String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'status', defaultValue: 500)
+  @JsonKey(name: 'status')
   int get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
+  @JsonKey(name: 'detail')
   String get detail => throw _privateConstructorUsedError;
+  @JsonKey(name: 'errors')
   List<HttpError>? get errors => throw _privateConstructorUsedError;
   @JsonKey(name: 'traceId')
   String? get traceId => throw _privateConstructorUsedError;
@@ -50,11 +51,10 @@ abstract class $HttpFailureCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'type') String? type,
-      @JsonKey(name: 'title', defaultValue: 'Exception') String title,
-      @JsonKey(name: 'status', defaultValue: 500) int status,
-      @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
-      String detail,
-      List<HttpError>? errors,
+      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'status') int status,
+      @JsonKey(name: 'detail') String detail,
+      @JsonKey(name: 'errors') List<HttpError>? errors,
       @JsonKey(name: 'traceId') String? traceId});
 }
 
@@ -119,11 +119,10 @@ abstract class _$$HttpFailureImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'type') String? type,
-      @JsonKey(name: 'title', defaultValue: 'Exception') String title,
-      @JsonKey(name: 'status', defaultValue: 500) int status,
-      @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
-      String detail,
-      List<HttpError>? errors,
+      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'status') int status,
+      @JsonKey(name: 'detail') String detail,
+      @JsonKey(name: 'errors') List<HttpError>? errors,
       @JsonKey(name: 'traceId') String? traceId});
 }
 
@@ -181,11 +180,10 @@ class __$$HttpFailureImplCopyWithImpl<$Res>
 class _$HttpFailureImpl extends _HttpFailure {
   const _$HttpFailureImpl(
       {@JsonKey(name: 'type') this.type,
-      @JsonKey(name: 'title', defaultValue: 'Exception') required this.title,
-      @JsonKey(name: 'status', defaultValue: 500) required this.status,
-      @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
-      required this.detail,
-      final List<HttpError>? errors,
+      @JsonKey(name: 'title') required this.title,
+      @JsonKey(name: 'status') required this.status,
+      @JsonKey(name: 'detail') required this.detail,
+      @JsonKey(name: 'errors') final List<HttpError>? errors,
       @JsonKey(name: 'traceId') this.traceId})
       : _errors = errors,
         super._();
@@ -197,16 +195,17 @@ class _$HttpFailureImpl extends _HttpFailure {
   @JsonKey(name: 'type')
   final String? type;
   @override
-  @JsonKey(name: 'title', defaultValue: 'Exception')
+  @JsonKey(name: 'title')
   final String title;
   @override
-  @JsonKey(name: 'status', defaultValue: 500)
+  @JsonKey(name: 'status')
   final int status;
   @override
-  @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
+  @JsonKey(name: 'detail')
   final String detail;
   final List<HttpError>? _errors;
   @override
+  @JsonKey(name: 'errors')
   List<HttpError>? get errors {
     final value = _errors;
     if (value == null) return null;
@@ -261,12 +260,10 @@ class _$HttpFailureImpl extends _HttpFailure {
 abstract class _HttpFailure extends HttpFailure {
   const factory _HttpFailure(
       {@JsonKey(name: 'type') final String? type,
-      @JsonKey(name: 'title', defaultValue: 'Exception')
-      required final String title,
-      @JsonKey(name: 'status', defaultValue: 500) required final int status,
-      @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
-      required final String detail,
-      final List<HttpError>? errors,
+      @JsonKey(name: 'title') required final String title,
+      @JsonKey(name: 'status') required final int status,
+      @JsonKey(name: 'detail') required final String detail,
+      @JsonKey(name: 'errors') final List<HttpError>? errors,
       @JsonKey(name: 'traceId') final String? traceId}) = _$HttpFailureImpl;
   const _HttpFailure._() : super._();
 
@@ -277,15 +274,16 @@ abstract class _HttpFailure extends HttpFailure {
   @JsonKey(name: 'type')
   String? get type;
   @override
-  @JsonKey(name: 'title', defaultValue: 'Exception')
+  @JsonKey(name: 'title')
   String get title;
   @override
-  @JsonKey(name: 'status', defaultValue: 500)
+  @JsonKey(name: 'status')
   int get status;
   @override
-  @JsonKey(name: 'detail', defaultValue: 'Exception has thrown')
+  @JsonKey(name: 'detail')
   String get detail;
   @override
+  @JsonKey(name: 'errors')
   List<HttpError>? get errors;
   @override
   @JsonKey(name: 'traceId')

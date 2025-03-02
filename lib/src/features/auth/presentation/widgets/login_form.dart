@@ -1,6 +1,4 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-
 import 'package:snackbar_ui/design_system/design_system.dart';
 import 'package:snackbar_ui/utils/app_responsive_extensions.dart';
 
@@ -8,13 +6,17 @@ import '../../../../../gen/assets.gen.dart';
 import '../../../../common/common.dart';
 import '../../../../core/core.dart';
 import '../../auth.dart';
+import '../models/login_request.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key, required this.model, this.onSuccess});
+  const LoginForm({
+    super.key,
+    required this.model,
+    this.onSubmit,
+  });
 
-  final VoidCallback? onSuccess;
-
-  final LoginViewModel model;
+  final ValueChanged<LoginRequest>? onSubmit;
+  final ValueNotifier<LoginState> model;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -27,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
   final _focusName = FocusNode();
   final _focusPass = FocusNode();
   final _focusLoginButton = FocusNode();
-  bool isPassVisible = false;
+  bool isHidden = true;
 
   @override
   void dispose() {
@@ -36,11 +38,8 @@ class _LoginFormState extends State<LoginForm> {
     _focusName.dispose();
     _focusPass.dispose();
     _focusLoginButton.dispose();
-    widget.model.dispose();
     super.dispose();
   }
-
-  void setUnFocus() => FocusScope.of(context).unfocus();
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +67,12 @@ class _LoginFormState extends State<LoginForm> {
             labelText: TextStrings.labelPassword,
             controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
-            obscureText: isPassVisible,
+            obscureText: isHidden,
             focusNode: _focusPass,
             prefixIcon: AppIcon.password(),
             suffixIcon: GestureDetector(
-              child: isPassVisible ? AppIcon.visible() : AppIcon.unVisible(),
-              onTap: () => setState(() => isPassVisible = !isPassVisible),
+              child: isHidden ? AppIcon.visible() : AppIcon.unVisible(),
+              onTap: () => setState(() => isHidden = !isHidden),
             ),
             validator: LoginValidators.passValidator,
             onSubmitted: (_) => _focusLoginButton.requestFocus(),
@@ -81,8 +80,21 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: EdgeInsets.only(top: AppSizes.md, bottom: AppSizes.sm),
             child: ValueListenableBuilder<LoginState>(
-              valueListenable: widget.model.state,
-              builder: _renderButton,
+              valueListenable: widget.model,
+              builder: (_, model, __) => AppButton(
+                isLoading: model is LoadingState,
+                text: TextStrings.buttonLogin,
+                focusNode: _focusLoginButton,
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() &&
+                      widget.onSubmit != null) {
+                    widget.onSubmit!(LoginRequest(
+                      _usernameController.text,
+                      _passwordController.text,
+                    ));
+                  }
+                },
+              ),
             ),
           ),
         ],
@@ -92,36 +104,41 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _renderButton(BuildContext context, LoginState value, Widget? child) {
     debugPrint(value.toString());
-    if (value is Loading) return _loginButton(true);
-    if (value is Ok && widget.onSuccess != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => widget.onSuccess!());
+    bool isLoading = false;
+
+    if (value is LoadingState) isLoading = true;
+    if (value is SuccessState) {
+      isLoading = false;
+      //WidgetsBinding.instance.addPostFrameCallback((_) => widget.onSuccess!());
     }
-    if (value is Failure) {
+    if (value is FailureState) {
+      /*
+      isLoading = false;
       WidgetsBinding.instance
           .addPostFrameCallback((_) => context.showCustomSnackBar(
                 title: value.title,
                 message: value.message,
                 type: ContentType.failure,
               ));
+
+       */
     }
-    return _loginButton();
+    return _loginButton(isLoading);
   }
 
-  Widget _loginButton([bool isLoading = false]) {
+  Widget _loginButton(bool isLoading) {
     debugPrint(isLoading.toString());
+
     return AppButton(
       isLoading: isLoading,
       text: TextStrings.buttonLogin,
       focusNode: _focusLoginButton,
       onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          setUnFocus();
-          await widget.model.login(
+        if (_formKey.currentState!.validate() && widget.onSubmit != null) {
+          widget.onSubmit!(LoginRequest(
             _usernameController.text,
             _passwordController.text,
-          );
-
-          ///TODO: Handle submit
+          ));
         }
       },
     );

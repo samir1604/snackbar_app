@@ -1,22 +1,27 @@
+import 'dart:ui';
+
 sealed class LoginState {
   const LoginState();
 }
 
-class Initial extends LoginState {
-  const Initial();
+class InitialState extends LoginState {
+  const InitialState();
 }
 
-class Loading extends LoginState {
-  const Loading();
+class LoadingState extends LoginState {
+  const LoadingState();
 }
 
-class Ok<T> extends LoginState {
-  const Ok(this.data);
+class SuccessState<T> extends LoginState {
+  const SuccessState(this.data);
+
   final T data;
 }
 
-class Failure extends LoginState {
-  const Failure(this.title, this.message);
+class FailureState extends LoginState {
+  const FailureState({required this.title, required this.message, this.errors});
+
   final String title;
   final String message;
+  final List<String>? errors;
 }

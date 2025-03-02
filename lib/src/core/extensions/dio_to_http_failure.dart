@@ -5,31 +5,36 @@ import '../core.dart';
 
 extension DioToHttpFailure on DioException {
   HttpFailure mapToHttpFailure(StackTrace? trace) {
-    final tracInfo = trace.toString().split('\n').first;
+    final traceInfo = trace.toString().split('\n').first;
 
     if (type == DioExceptionType.badResponse) {
+      final errorResponse = HttpFailure.fromJson(response?.data as Map<String, dynamic>);
+
+      if(errorResponse != null) {
+        return errorResponse;
+      }
+
       return HttpFailure(
-        type: _getHttpType(response?.statusCode ?? HttpStatusCode.badRequest),
+        type:
+            _getTypeFromHttp(response?.statusCode ?? HttpStatusCode.badRequest),
         title: TextStrings.titleException,
         status: response?.statusCode ?? HttpStatusCode.badRequest,
-        detail: response?.statusMessage ??
-            _getStatusMessage(
-                response?.statusCode ?? HttpStatusCode.badRequest),
-        traceId: tracInfo,
+        detail: _getDetailFromHttp(
+            response?.statusCode ?? HttpStatusCode.badRequest),
+        traceId: traceInfo,
       );
     }
 
     return HttpFailure(
-      type: _getDioType(type),
+      type: _getTypeFromDio(type),
       title: TextStrings.titleException,
-      status: _getStatusCodeFromDioType(type),
-      detail: message ?? _getStatusMessageFromDioType(type),
-      traceId: tracInfo,
+      status: _getStatusFromDio(type),
+      detail: _getDetailFromDio(type),
+      traceId: traceInfo,
     );
   }
 
-  static int _getStatusCodeFromDioType(DioExceptionType dioType) =>
-      switch (dioType) {
+  static int _getStatusFromDio(DioExceptionType dioType) => switch (dioType) {
         DioExceptionType.badResponse => HttpStatusCode.badRequest,
         DioExceptionType.connectionTimeout => HttpStatusCode.requestTimeout,
         DioExceptionType.sendTimeout => HttpStatusCode.requestTimeout,
@@ -40,7 +45,7 @@ extension DioToHttpFailure on DioException {
         DioExceptionType.badCertificate => HttpStatusCode.badCertificate,
       };
 
-  static String _getStatusMessageFromDioType(DioExceptionType dioType) =>
+  static String _getDetailFromDio(DioExceptionType dioType) =>
       switch (dioType) {
         DioExceptionType.badResponse => HttpStatusMessages.badRequest400,
         DioExceptionType.connectionTimeout =>
@@ -56,7 +61,7 @@ extension DioToHttpFailure on DioException {
           HttpStatusMessages.badCertificate_401,
       };
 
-  static String _getDioType(DioExceptionType dioType) => switch (dioType) {
+  static String _getTypeFromDio(DioExceptionType dioType) => switch (dioType) {
         DioExceptionType.badResponse => RfcUrls.badResponse,
         DioExceptionType.connectionTimeout => RfcUrls.connectionTimeout,
         DioExceptionType.sendTimeout => RfcUrls.sendTimeout,
@@ -68,7 +73,7 @@ extension DioToHttpFailure on DioException {
           'https://tools.ietf.org/html/rfc2838',
       };
 
-  static String _getHttpType(int statusCode) {
+  static String _getTypeFromHttp(int statusCode) {
     final type = switch (statusCode) {
       HttpStatusCode.badRequest => RfcUrls.badRequest,
       HttpStatusCode.forbidden => RfcUrls.forbidden,
@@ -87,7 +92,7 @@ extension DioToHttpFailure on DioException {
     return type ?? RfcUrls.internalServerError;
   }
 
-  static String _getStatusMessage(int statusCode) => switch (statusCode) {
+  static String _getDetailFromHttp(int statusCode) => switch (statusCode) {
         HttpStatusCode.badRequest => HttpStatusMessages.badRequest400,
         HttpStatusCode.forbidden => HttpStatusMessages.forbidden403,
         HttpStatusCode.notFound => HttpStatusMessages.notFound404,

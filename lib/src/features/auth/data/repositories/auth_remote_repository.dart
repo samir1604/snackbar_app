@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:multiple_result/multiple_result.dart';
+import 'package:snackbar_ui/snackbar_ui.dart';
 
 import '../../../../core/core.dart';
 import '../../auth.dart';
@@ -19,7 +18,7 @@ final class AuthRemoteRepository implements AuthRepository {
     } on DioException catch (e, stackTrace) {
       return Error(e.mapToHttpFailure(stackTrace));
     } catch (e, stackTrace) {
-      final ex = e as Exception;
+      AppLoggerUtils.error(e.toString());
       return Error(HttpFailure.createInternalServerException(stackTrace));
     }
   }

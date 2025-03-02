@@ -5,6 +5,7 @@ class NetworkSettings {
 
   static String baseUrl = Environment.apiBaseUrl;
 
+  /// TODO: 'Release mode, change duration to higher numbers'
   static Duration get connectTimeout => Duration(seconds: 5);
 
   static Duration get receiveTimeout => Duration(seconds: 5);

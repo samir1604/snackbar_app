@@ -9,9 +9,9 @@ part of 'http_failure.dart';
 _$HttpFailureImpl _$$HttpFailureImplFromJson(Map<String, dynamic> json) =>
     _$HttpFailureImpl(
       type: json['type'] as String?,
-      title: json['title'] as String? ?? 'Exception',
-      status: (json['status'] as num?)?.toInt() ?? 500,
-      detail: json['detail'] as String? ?? 'Exception has thrown',
+      title: json['title'] as String,
+      status: (json['status'] as num).toInt(),
+      detail: json['detail'] as String,
       errors: (json['errors'] as List<dynamic>?)
           ?.map((e) => HttpError.fromJson(e as Map<String, dynamic>))
           .toList(),

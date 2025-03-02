@@ -143,9 +143,9 @@ class _LoginPageState extends State<SignInPage> {
     VoidCallback? onClick,
   ) {
     switch (state) {
-      case Loading():
+      case LoadingState():
         return CircularProgressIndicator();
-      case Ok():
+      case SuccessState():
         WidgetsBinding.instance.addPostFrameCallback((_) {
           //TODO: Cambiar a pagina Home
         });
@@ -155,7 +155,7 @@ class _LoginPageState extends State<SignInPage> {
               Text('Iniciar sesión', style: TextStyle(fontSize: 16))
             ]),
             onClick);
-      case Failure(message: final msg):
+      case FailureState(message: final msg):
         WidgetsBinding.instance.addPostFrameCallback(
             (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(

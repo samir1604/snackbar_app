@@ -21,7 +21,7 @@ LoginModel _$LoginModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginModel {
   @JsonKey(name: 'id')
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
@@ -30,7 +30,7 @@ mixin _$LoginModel {
   Role get role => throw _privateConstructorUsedError;
   @JsonKey(name: 'picture')
   String? get picture => throw _privateConstructorUsedError;
-  @JsonKey(name: 'accessToken')
+  @JsonKey(name: 'token')
   String get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'refreshToken')
   String get refreshToken => throw _privateConstructorUsedError;
@@ -52,13 +52,13 @@ abstract class $LoginModelCopyWith<$Res> {
       _$LoginModelCopyWithImpl<$Res, LoginModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
+      {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'username') String username,
       @JsonKey(name: 'rol', fromJson: Role.fromJson, toJson: Role.toJson)
       Role role,
       @JsonKey(name: 'picture') String? picture,
-      @JsonKey(name: 'accessToken') String accessToken,
+      @JsonKey(name: 'token') String accessToken,
       @JsonKey(name: 'refreshToken') String refreshToken});
 }
 
@@ -89,7 +89,7 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -127,13 +127,13 @@ abstract class _$$LoginModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
+      {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'username') String username,
       @JsonKey(name: 'rol', fromJson: Role.fromJson, toJson: Role.toJson)
       Role role,
       @JsonKey(name: 'picture') String? picture,
-      @JsonKey(name: 'accessToken') String accessToken,
+      @JsonKey(name: 'token') String accessToken,
       @JsonKey(name: 'refreshToken') String refreshToken});
 }
 
@@ -162,7 +162,7 @@ class __$$LoginModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -200,8 +200,8 @@ class _$LoginModelImpl extends _LoginModel {
       @JsonKey(name: 'username') required this.username,
       @JsonKey(name: 'rol', fromJson: Role.fromJson, toJson: Role.toJson)
       required this.role,
-      @JsonKey(name: 'picture') required this.picture,
-      @JsonKey(name: 'accessToken') required this.accessToken,
+      @JsonKey(name: 'picture') this.picture,
+      @JsonKey(name: 'token') required this.accessToken,
       @JsonKey(name: 'refreshToken') required this.refreshToken})
       : super._();
 
@@ -210,7 +210,7 @@ class _$LoginModelImpl extends _LoginModel {
 
   @override
   @JsonKey(name: 'id')
-  final int id;
+  final String id;
   @override
   @JsonKey(name: 'name')
   final String name;
@@ -224,7 +224,7 @@ class _$LoginModelImpl extends _LoginModel {
   @JsonKey(name: 'picture')
   final String? picture;
   @override
-  @JsonKey(name: 'accessToken')
+  @JsonKey(name: 'token')
   final String accessToken;
   @override
   @JsonKey(name: 'refreshToken')
@@ -275,13 +275,13 @@ class _$LoginModelImpl extends _LoginModel {
 
 abstract class _LoginModel extends LoginModel {
   const factory _LoginModel(
-          {@JsonKey(name: 'id') required final int id,
+          {@JsonKey(name: 'id') required final String id,
           @JsonKey(name: 'name') required final String name,
           @JsonKey(name: 'username') required final String username,
           @JsonKey(name: 'rol', fromJson: Role.fromJson, toJson: Role.toJson)
           required final Role role,
-          @JsonKey(name: 'picture') required final String? picture,
-          @JsonKey(name: 'accessToken') required final String accessToken,
+          @JsonKey(name: 'picture') final String? picture,
+          @JsonKey(name: 'token') required final String accessToken,
           @JsonKey(name: 'refreshToken') required final String refreshToken}) =
       _$LoginModelImpl;
   const _LoginModel._() : super._();
@@ -291,7 +291,7 @@ abstract class _LoginModel extends LoginModel {
 
   @override
   @JsonKey(name: 'id')
-  int get id;
+  String get id;
   @override
   @JsonKey(name: 'name')
   String get name;
@@ -305,7 +305,7 @@ abstract class _LoginModel extends LoginModel {
   @JsonKey(name: 'picture')
   String? get picture;
   @override
-  @JsonKey(name: 'accessToken')
+  @JsonKey(name: 'token')
   String get accessToken;
   @override
   @JsonKey(name: 'refreshToken')

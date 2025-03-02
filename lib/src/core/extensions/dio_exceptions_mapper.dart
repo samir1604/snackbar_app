@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 import '../../common/common.dart';
-import '../../common/constants/network/http_status_code.dart';
 import '../core.dart';
 
 extension DioExceptionsMapper on DioException {

@@ -8,23 +8,22 @@ class LoginViewModel {
 
   final UseCase<User, LoginParams> _useCase;
 
-  final ValueNotifier<LoginState> state = ValueNotifier<LoginState>(Initial());
+  final ValueNotifier<LoginState> state =
+      ValueNotifier<LoginState>(InitialState());
 
   Future login(String username, String password) async {
-    state.value = Loading();
+    state.value = LoadingState();
     final response = await _useCase(
         params: LoginParams(username: username, password: password));
 
-    //await Future.delayed(Duration(milliseconds: 3000));
-
-    state.value = Ok(true);
-
     response.when((_) {
-      state.value = Ok(true);
+      state.value = SuccessState(true);
     }, (failure) {
-      state.value = Failure(
-        failure.title,
-        failure.detail,
+      final errors = failure.errors?.map((e) => e.description).toList();
+      state.value = FailureState(
+        title: failure.title,
+        message: failure.detail,
+        errors: errors,
       );
     });
   }
