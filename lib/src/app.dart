@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:snackbar_ui/snackbar_ui.dart';
 
+import 'core/core.dart';
+import 'core/router/routers.dart';
 import 'core/service_locator.dart';
-import 'features/auth/auth.dart';
-import 'features/auth/presentation/pages/sign_in_page.dart';
-import 'features/auth/presentation/view_models/login_view_model.dart';
-import 'features/home/pages/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Chaplin',
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: LoginPage(),
+      routerConfig: Routers(getIt<SettingsServices>()).router,
     );
   }
 }

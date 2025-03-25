@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:snackbar_ui/design_system/design_system.dart';
+import 'package:snackbar_ui/utils/app_device_extensions.dart';
+
 import 'package:snackbar_ui/utils/app_responsive_extensions.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../common/common.dart';
-import '../../../../core/core.dart';
 import '../../auth.dart';
 import '../models/login_request.dart';
 
@@ -29,7 +30,8 @@ class _LoginFormState extends State<LoginForm> {
   final _focusName = FocusNode();
   final _focusPass = FocusNode();
   final _focusLoginButton = FocusNode();
-  bool isHidden = true;
+  bool _isHidden = true;
+  bool _keepMeInside = false;
 
   @override
   void dispose() {
@@ -67,16 +69,26 @@ class _LoginFormState extends State<LoginForm> {
             labelText: TextStrings.labelPassword,
             controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
-            obscureText: isHidden,
+            obscureText: _isHidden,
             focusNode: _focusPass,
             prefixIcon: AppIcon.password(),
             suffixIcon: GestureDetector(
-              child: isHidden ? AppIcon.visible() : AppIcon.unVisible(),
-              onTap: () => setState(() => isHidden = !isHidden),
+              child: _isHidden ? AppIcon.visible() : AppIcon.unVisible(),
+              onTap: () => setState(() => _isHidden = !_isHidden),
             ),
             validator: LoginValidators.passValidator,
             onSubmitted: (_) => _focusLoginButton.requestFocus(),
           ),
+          SizedBox(height: AppSizes.spaceBtwInputField),
+          AppCheckboxWithLabel(
+            label: TextStrings.keepMeSignIn,
+            style: Styles.checkBoxText,
+            value: _keepMeInside,
+            onChanged: (bool? value) => setState(() {
+              _keepMeInside = value ?? false;
+            }),
+          ),
+          //Generate Login Button
           Padding(
             padding: EdgeInsets.only(top: AppSizes.md, bottom: AppSizes.sm),
             child: ValueListenableBuilder<LoginState>(
@@ -91,6 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                     widget.onSubmit!(LoginRequest(
                       _usernameController.text,
                       _passwordController.text,
+                      _keepMeInside,
                     ));
                   }
                 },
@@ -99,48 +112,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _renderButton(BuildContext context, LoginState value, Widget? child) {
-    debugPrint(value.toString());
-    bool isLoading = false;
-
-    if (value is LoadingState) isLoading = true;
-    if (value is SuccessState) {
-      isLoading = false;
-      //WidgetsBinding.instance.addPostFrameCallback((_) => widget.onSuccess!());
-    }
-    if (value is FailureState) {
-      /*
-      isLoading = false;
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => context.showCustomSnackBar(
-                title: value.title,
-                message: value.message,
-                type: ContentType.failure,
-              ));
-
-       */
-    }
-    return _loginButton(isLoading);
-  }
-
-  Widget _loginButton(bool isLoading) {
-    debugPrint(isLoading.toString());
-
-    return AppButton(
-      isLoading: isLoading,
-      text: TextStrings.buttonLogin,
-      focusNode: _focusLoginButton,
-      onPressed: () async {
-        if (_formKey.currentState!.validate() && widget.onSubmit != null) {
-          widget.onSubmit!(LoginRequest(
-            _usernameController.text,
-            _passwordController.text,
-          ));
-        }
-      },
     );
   }
 }

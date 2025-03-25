@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../atoms/app_text.dart';
 import '../foundations/foundations.dart';
 
-/// {@template switch_with_label}
+/// {@template app_switch_with_label}
 /// Una molécula que representa un switch con una etiqueta asociada.
 /// {@endtemplate}
-class SwitchWithLabel extends StatelessWidget {
+class AppSwitchWithLabel extends StatelessWidget {
   /// {@macro switch_with_label}
-  const SwitchWithLabel({
+  const AppSwitchWithLabel({
     super.key,
     required this.label,
     this.value = false,

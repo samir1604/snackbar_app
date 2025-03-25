@@ -35,12 +35,13 @@ class _LoginPageState extends State<SignInPage> {
   void _login() async {
 
     if (_formKey.currentState!.validate()) {
+      /*
       widget.viewModel.login(
         _usernameController.text,
         _passwordController.text,
       );
 
-      /*
+
       setState(() {
         _isLoading = true;
       });

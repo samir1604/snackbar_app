@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../enums/tab_bar_position.dart';
 
-/// {@template tabs}
+/// {@template app_tabs}
 /// Una molécula que representa un conjunto de pestañas para navegar entre diferentes vistas de contenido.
 /// {@endtemplate}
-class Tabs extends StatelessWidget {
+class AppTabs extends StatelessWidget {
   /// {@macro tabs}
-  const Tabs({
+  const AppTabs({
     super.key,
     required this.tabs,
     required this.children,

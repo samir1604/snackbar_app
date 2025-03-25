@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snackbar_ui/design_system/design_system.dart';
 
-import '../atoms/app_text.dart';
-import '../foundations/app_sizes.dart';
-
 /// {@template app_section_header}
 /// Una molécula que representa un encabezado de sección con un título y una acción opcional.
 /// {@endtemplate}

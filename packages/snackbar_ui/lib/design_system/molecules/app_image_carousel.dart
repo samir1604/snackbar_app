@@ -3,12 +3,12 @@ import 'package:snackbar_ui/design_system/atoms/app_image_asset.dart';
 
 import '../foundations/app_sizes.dart';
 
-/// {@template image_carousel}
+/// {@template app_image_carousel}
 /// Una molécula que representa un carrusel de imágenes.
 /// {@endtemplate}
-class ImageCarousel extends StatefulWidget {
+class AppImageCarousel extends StatefulWidget {
   /// {@macro image_carousel}
-  const ImageCarousel(
+  const AppImageCarousel(
       {super.key,
       required this.imageAssets,
       this.height,
@@ -28,10 +28,10 @@ class ImageCarousel extends StatefulWidget {
   final bool showIndicators;
 
   @override
-  State<ImageCarousel> createState() => _ImageCarouselState();
+  State<AppImageCarousel> createState() => _AppImageCarouselState();
 }
 
-class _ImageCarouselState extends State<ImageCarousel> {
+class _AppImageCarouselState extends State<AppImageCarousel> {
   final _pageController = PageController();
   int _currentPage = 0;
 

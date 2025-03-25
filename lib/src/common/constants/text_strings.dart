@@ -5,6 +5,8 @@ class TextStrings {
   static const String labelUsername = 'Nombre de Usuario:';
   static const String labelPassword = 'Contraseña:';
   static const String buttonLogin = 'Iniciar';
+  static const String keepMeSignIn = 'Mantenerme iniciado';
+
 
 
   /// Validation

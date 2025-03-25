@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:snackbar_ui/snackbar_ui.dart';
 
@@ -6,6 +7,7 @@ import '../../../../../gen/assets.gen.dart';
 
 import '../../../../common/common.dart';
 import '../../../../core/core.dart';
+import '../../../../core/router/router_constants.dart';
 import '../../../../core/service_locator.dart';
 import '../../auth.dart';
 import '../models/login_request.dart';
@@ -26,27 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     model.state.addListener(_listener);
   }
 
-  void _listener() {
-    debugPrint('Cambiando el estado: ${model.state.value.toString()}');
-    if (model.state.value is SuccessState<bool>) {
-      debugPrint('Voy a cambiar de pagina');
-    }
-
-    if (model.state.value is FailureState) {
-      final state = model.state.value as FailureState;
-      context.showToast(state.title, state.message, ToastType.error, state.errors);
-      /*
-      context.showCustomSnackBar(
-        title: state.title,
-        message: state.message,
-        errors: state.errors,
-        type: ContentType.failure,
-      );
-
-       */
-    }
-  }
-
   @override
   void dispose() {
     model.state.removeListener(_listener);
@@ -54,20 +35,36 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void _listener() {
+    if (model.state.value is SuccessState<bool>) {
+      debugPrint('Cambiando de direccion');
+      context.replaceNamed(RoutesName.homeName);
+    }
+
+    if (model.state.value is FailureState) {
+      final state = model.state.value as FailureState;
+      context.showToast(
+        state.title,
+        state.message,
+        ToastType.error,
+        state.errors,
+      );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) =>
-      context.responsive(
+  Widget build(BuildContext context) => context.responsive(
           GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             behavior: HitTestBehavior.opaque,
             child: Scaffold(
               body: Center(
                   child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.all(AppSizes.md),
-                      child: LoginForm(model: model.state, onSubmit: _onSubmit),
-                    ),
-                  )),
+                child: Padding(
+                  padding: EdgeInsets.all(AppSizes.md),
+                  child: LoginForm(model: model.state, onSubmit: _onSubmit),
+                ),
+              )),
             ),
           ),
           {
@@ -80,9 +77,9 @@ class _LoginPageState extends State<LoginPage> {
                       constraints: context
                           .responsive(const BoxConstraints(maxWidth: 400), {
                         AppScreenSize.tablet:
-                        const BoxConstraints(maxWidth: 500),
+                            const BoxConstraints(maxWidth: 500),
                         AppScreenSize.laptop:
-                        const BoxConstraints(maxWidth: 500),
+                            const BoxConstraints(maxWidth: 500),
                       }),
                       child: Padding(
                         padding: EdgeInsets.all(AppSizes.md),
@@ -118,6 +115,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _onSubmit(LoginRequest request) async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await model.login(request.username, request.password);
+    await model.login(
+        username: request.username,
+        password: request.password,
+        keepMeLoggedIn: request.keepMeLoggedIn);
   }
 }

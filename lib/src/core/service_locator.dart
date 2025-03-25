@@ -6,16 +6,27 @@ import '../common/common.dart';
 import '../features/auth/auth.dart';
 
 import 'core.dart';
-import 'local/profile_services_impl.dart';
-import 'services/profile_services.dart';
 
 final getIt = GetIt.instance;
 
 void initServiceLocator() {
   /// Core Services
-  getIt.registerLazySingleton<SecureStorage>(() => SecureStorageService());
+  getIt.registerLazySingleton<SecureStorage>(
+    () => SecureStorageService(),
+  );
+  getIt.registerLazySingleton<TokenServices>(
+    () => TokenStorageServices(getIt<SecureStorage>()),
+  );
   getIt.registerLazySingleton<ProfileServices>(
-      () => ProfileServicesImpl(getIt<SecureStorage>()));
+    () => ProfileServicesImpl(getIt<SecureStorage>()),
+  );
+  getIt.registerLazySingleton<SettingsServices>(
+    () => LocalSettingsServices(
+      getIt<ProfileServices>(),
+      getIt<TokenServices>(),
+      getIt<SecureStorage>(),
+    ),
+  );
 
   /// Connection
   getIt.registerLazySingleton<Dio>(() {
@@ -27,8 +38,11 @@ void initServiceLocator() {
     ));
     dio.interceptors.addAll([
       HttpFormatter(loggingFilter: (_, __, ___) => true),
-      NetworkInterceptor(dio, TokenServiceImpl(dio, getIt<SecureStorage>()),
-          getIt<ProfileServices>()),
+      NetworkInterceptor(
+        dio,
+        getIt<TokenServices>(),
+        getIt<ProfileServices>(),
+      ),
     ]);
 
     return dio;
@@ -36,14 +50,19 @@ void initServiceLocator() {
 
   /// Repositories
   //getIt.registerLazySingleton<TableServices>(() => TableServices());
-  getIt.registerLazySingleton<AuthRepository>(() =>
-      AuthRemoteRepository(AuthApi(getIt<Dio>(), NetworkSettings.baseUrl)));
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRemoteRepository(AuthApi(
+      getIt<Dio>(),
+      NetworkSettings.baseUrl,
+    )),
+  );
 
   /// Use Cases
   getIt.registerLazySingleton<UseCase<User, LoginParams>>(
     () => LoginUseCase(
       getIt<AuthRepository>(),
       getIt<SecureStorage>(),
+      getIt<SettingsServices>(),
     ),
   );
 

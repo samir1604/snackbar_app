@@ -18,7 +18,6 @@ final class NetworkInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-
     final String token = await _tokenServices.getStorageAccessToken() ?? '';
 
     options.headers.addAll(NetworkSettings.requestOptions);
@@ -48,17 +47,19 @@ final class NetworkInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    AppLoggerUtils.error('Dio Error: ${err.message}' ?? 'Dio Error', err.error);
+    AppLoggerUtils.error('Dio Error: ${err.message}', err.error);
 
     if (err.response?.statusCode == HttpStatus.unauthorized &&
         err.requestOptions.path != EndpointStrings.loginEndpoint) {
       try {
-        final token = await _tokenServices.getStorageRefreshToken();
+        final storageToken = await _tokenServices.getStorageRefreshToken();
         final User? user = await _profileServices.getStorageProfile();
-        if (user == null || token == null) return handler.next(err);
+        if (user == null || storageToken == null) return handler.next(err);
 
-        final (accessToken, refreshToken) =
-            await _getRefreshToken(user.id, token);
+        final (accessToken, refreshToken) = await _getRefreshToken(_dio, {
+          'id': user.id.toString(),
+          NetworkSettings.refreshTokenKey: storageToken
+        });
 
         await _tokenServices.saveTokensToStorage(accessToken, refreshToken);
 
@@ -67,8 +68,7 @@ final class NetworkInterceptor extends Interceptor {
 
         return handler.resolve(await _dio.fetch(err.requestOptions));
       } on DioException catch (e) {
-        AppLoggerUtils.error(
-            'Refresh Token Exception: ${e.message}' ?? 'Dio Error', e.error);
+        AppLoggerUtils.error('Refresh Token Exception: ${e.message}', e.error);
 
         if (e.response?.statusCode == HttpStatusCode.invalidToken) {
           await _tokenServices.clearStorageTokens();
@@ -81,15 +81,28 @@ final class NetworkInterceptor extends Interceptor {
     return handler.next(err);
   }
 
-  Future<(String token, String refrehToken)> _getRefreshToken(
-    int id,
-    String token,
-  ) async {
+  Future<(String, String)> _getRefreshToken(
+      Dio dio, Map<String, dynamic> data) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+        EndpointStrings.refreshTokenEndpoint,
+        data: data);
+
+    if (response.statusCode == HttpStatus.ok) {
+      final result = RefreshTokenModel.fromJson(response.data ?? {});
+      return (result.accessToken, result.refreshToken);
+    } else {
+      throw DioException(
+          requestOptions: response.requestOptions, response: response);
+    }
+
+    /*
     final response = await _tokenServices.getRefreshToken(
       id.toString(),
       token,
     );
 
     return (response.accessToken, response.accessToken);
+
+     */
   }
 }

@@ -19,6 +19,7 @@ export 'failures/http_failure.dart';
 // Local
 export 'local/secure_storage_service.dart';
 export 'local/profile_services_impl.dart';
+export 'local/local_settings_services.dart';
 
 // Remote
 export 'remote/network_interceptor.dart';
@@ -28,6 +29,7 @@ export 'tokens/token_service_impl.dart';
 export 'services/secure_storage.dart';
 export 'services/token_services.dart';
 export 'services/profile_services.dart';
+export 'services/settings_services.dart';
 
 // Models
 export 'models/environment.dart';

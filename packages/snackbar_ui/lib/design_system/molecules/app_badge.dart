@@ -7,12 +7,12 @@ import '../foundations/app_colors.dart';
 import '../foundations/app_sizes.dart';
 import '../foundations/app_styles.dart';
 
-/// {@template badge}
+/// {@template app_badge}
 /// Una molécula que representa una insignia con un texto y una forma específica.
 /// {@endtemplate}
-class Badge extends StatelessWidget {
+class AppBadge extends StatelessWidget {
   /// {@macro badge}
-  const Badge({
+  const AppBadge({
     super.key,
     required this.text,
     this.backgroundColor,

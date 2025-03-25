@@ -13,10 +13,7 @@ class HomePage extends StatelessWidget {
           SliverAppBar(
             expandedHeight: context.blockSizeVertical(30),
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/images/header-image.jpeg',
-                fit: BoxFit.cover,
-              ),
+              background: Text('background'),
             ),
             leading: CircleAvatar(
               backgroundColor: Colors.black,

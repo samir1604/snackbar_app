@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../atoms/atoms.dart';
 import '../foundations/foundations.dart';
 
-/// {@template checkbox_with_label}
+/// {@template app_checkbox_with_label}
 /// Una molécula que representa un checkbox con una etiqueta asociada.
 /// {@endtemplate}
-class CheckboxWithLabel extends StatelessWidget {
+class AppCheckboxWithLabel extends StatelessWidget {
   /// {@macro checkbox_with_label}
-  const CheckboxWithLabel({
+  const AppCheckboxWithLabel({
     super.key,
     required this.label,
     this.value = false,
@@ -74,10 +74,6 @@ class CheckboxWithLabel extends StatelessWidget {
                           states.contains(WidgetState.selected)
                               ? activeColor ?? primaryColor
                               : inactiveColor ?? AppColors.disabled))),
-            Checkbox(
-              value: value,
-              onChanged: onChanged,
-            ),
             const SizedBox(width: AppSizes.sm),
             Expanded(
               child: AppText(

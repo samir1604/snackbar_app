@@ -12,4 +12,7 @@ final class Styles {
 
   static TextStyle? get toastErrors =>
       AppStyles.labelXXS(textColor:  Colors.black54);
+
+  static TextStyle? get checkBoxText =>
+      AppStyles.labelXXS(textColor: Colors.black);
 }

@@ -11,12 +11,21 @@ class LoginViewModel {
   final ValueNotifier<LoginState> state =
       ValueNotifier<LoginState>(InitialState());
 
-  Future login(String username, String password) async {
+  Future<void> login(
+      {required String username,
+      required String password,
+      bool keepMeLoggedIn = false}) async {
     state.value = LoadingState();
     final response = await _useCase(
-        params: LoginParams(username: username, password: password));
+        params: LoginParams(
+          username: username,
+          password: password,
+        ),
+        extra: {
+          'keepMeLoggedIn': keepMeLoggedIn,
+        });
 
-    response.when((_) {
+    response.when((_) async {
       state.value = SuccessState(true);
     }, (failure) {
       final errors = failure.errors?.map((e) => e.description).toList();
