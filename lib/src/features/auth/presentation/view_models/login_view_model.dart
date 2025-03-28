@@ -6,7 +6,7 @@ import '../../auth.dart';
 class LoginViewModel {
   LoginViewModel(this._useCase);
 
-  final UseCase<User, LoginParams> _useCase;
+  final UseCase<bool, LoginParams> _useCase;
 
   final ValueNotifier<LoginState> state =
       ValueNotifier<LoginState>(InitialState());
@@ -25,8 +25,8 @@ class LoginViewModel {
           'keepMeLoggedIn': keepMeLoggedIn,
         });
 
-    response.when((_) async {
-      state.value = SuccessState(true);
+    response.when((result) async {
+      state.value = SuccessState(result);
     }, (failure) {
       final errors = failure.errors?.map((e) => e.description).toList();
       state.value = FailureState(

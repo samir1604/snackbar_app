@@ -7,18 +7,22 @@ import '../../features/auth/auth.dart';
 import '../core.dart';
 
 final class NetworkInterceptor extends Interceptor {
-  NetworkInterceptor(this._dio, this._tokenServices, this._profileServices);
+  NetworkInterceptor(this._dio,
+      this._settingsServices); //this._tokenServices, this._profileServices);
 
   final Dio _dio;
-  final TokenServices _tokenServices;
-  final ProfileServices _profileServices;
+
+  //final TokenServices _tokenServices;
+  //final ProfileServices _profileServices;
+  final SettingsServices _settingsServices;
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final String token = await _tokenServices.getStorageAccessToken() ?? '';
+//    final String token = await _tokenServices.getStorageAccessToken() ?? '';
+    final String token = _settingsServices.accessToken; // await  _tokenServices.getStorageAccessToken() ?? '';
 
     options.headers.addAll(NetworkSettings.requestOptions);
     if (token.isNotEmpty) {
@@ -52,26 +56,30 @@ final class NetworkInterceptor extends Interceptor {
     if (err.response?.statusCode == HttpStatus.unauthorized &&
         err.requestOptions.path != EndpointStrings.loginEndpoint) {
       try {
-        final storageToken = await _tokenServices.getStorageRefreshToken();
-        final User? user = await _profileServices.getStorageProfile();
-        if (user == null || storageToken == null) return handler.next(err);
+        //final storageToken = await _tokenServices.getStorageRefreshToken();
+        //final User? user = await _profileServices.getStorageProfile();
+        final refreshToken = _settingsServices.refreshToken;
+        final User? user = _settingsServices.user;
+        if (user == null || refreshToken.isEmpty) return handler.next(err);
 
-        final (accessToken, refreshToken) = await _getRefreshToken(_dio, {
+        final (newAccessToken, newRefreshToken) = await _renewTokens(_dio, {
           'id': user.id.toString(),
-          NetworkSettings.refreshTokenKey: storageToken
+          NetworkSettings.refreshTokenKey: refreshToken,
         });
 
-        await _tokenServices.saveTokensToStorage(accessToken, refreshToken);
+        _settingsServices.saveTokens(newAccessToken, newRefreshToken);
+        //await _tokenServices.saveTokensToStorage(accessToken, refreshToken);
 
         err.requestOptions.headers[NetworkSettings.authorizationKey] =
-            'Bearer $accessToken';
+            'Bearer $newAccessToken';
 
         return handler.resolve(await _dio.fetch(err.requestOptions));
       } on DioException catch (e) {
         AppLoggerUtils.error('Refresh Token Exception: ${e.message}', e.error);
 
         if (e.response?.statusCode == HttpStatusCode.invalidToken) {
-          await _tokenServices.clearStorageTokens();
+          //await _tokenServices.clearStorageTokens();
+          _settingsServices.clearSettings();
           err.response?.statusCode == HttpStatusCode.invalidToken;
           return handler.next(err);
         }
@@ -81,7 +89,7 @@ final class NetworkInterceptor extends Interceptor {
     return handler.next(err);
   }
 
-  Future<(String, String)> _getRefreshToken(
+  Future<(String, String)> _renewTokens(
       Dio dio, Map<String, dynamic> data) async {
     final response = await _dio.post<Map<String, dynamic>>(
         EndpointStrings.refreshTokenEndpoint,

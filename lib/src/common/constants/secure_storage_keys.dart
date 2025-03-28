@@ -4,5 +4,5 @@ class SecureStorageKeys {
   static const String accessTokenStorageKey = 'accessToken';
   static const String refreshTokenStorageKey = 'refreshToken';
   static const String profileStorageKey= 'profile';
-  static const String keepMeSingInKey = 'keepMeSingInKey';
+  static const String keepMeSingedInKey = 'keepMeSingInKey';
 }

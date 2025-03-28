@@ -1,39 +1,57 @@
-import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 import '../../../../common/common.dart';
 import '../../../../core/core.dart';
 import '../../auth.dart';
 
-class LoginUseCase implements UseCase<User, LoginParams> {
-  const LoginUseCase(this._repository, this._storage, this._settingsServices);
+class LoginUseCase implements UseCase<bool, LoginParams> {
+  const LoginUseCase(
+      this._repository, this._settingsServices); //this._storage, );
 
   final AuthRepository _repository;
-  final SecureStorage _storage;
+
+  //final SecureStorage _storage;
   final SettingsServices _settingsServices;
 
   @override
-  FResult<User, HttpFailure> call(
+  FResult<bool, HttpFailure> call(
       {required LoginParams params, Object? extra}) async {
-    final map = extra as Map<String, dynamic>;
+    try {
+      bool keepMeLoggedIn = _parseKeepMeLoggedIn(extra);
+      final response = await _repository.login(params: params);
 
-    final keepMeLoggedIn = map['keepMeLoggedIn'] as bool;
+      return response.when((model) async {
+        await _persistStorage(model, keepMeLoggedIn);
+        return Success(true);
+      }, (failure) => Error(failure));
+    } catch (e) {
+      //TODO: Arreglar lo de devolver el error para una clase generica
+      return Error(HttpFailure(
+          status: 500,
+          title: 'Error de Storage',
+          detail: 'Fallo accediendo al almacenamiento interno.'));
+    }
+  }
 
-    final response = await _repository.login(params: params);
+  bool _parseKeepMeLoggedIn(Object? extra) {
+    if (extra is Map<String, dynamic>) {
+      return extra['keepMeLoggedIn'] as bool? ?? false;
+    }
+    return false;
+  }
 
-    return response.when((model) async {
+  Future<void> _persistStorage(LoginModel model, bool keepMeLoggedIn) async {
+    try {
+      debugPrint(keepMeLoggedIn.toString());
+      await _settingsServices.saveKeepSinged(keepMeLoggedIn);
       await Future.wait([
-        _storage.write(
-            SecureStorageKeys.accessTokenStorageKey, model.accessToken),
-        _storage.write(
-            SecureStorageKeys.refreshTokenStorageKey, model.accessToken),
-        _storage.write(
-            SecureStorageKeys.profileStorageKey, jsonEncode(model.mapTo())),
-        _settingsServices.saveKeepSinged(keepMeLoggedIn),
+        _settingsServices.saveProfile(model.mapTo()),
+        _settingsServices.saveTokens(model.accessToken, model.refreshToken),
       ]);
-      _settingsServices.setLoginTimeStamp();
-      return Success(model.mapTo());
-    }, (failure) => Error(failure));
+    } catch (_) {
+      await _settingsServices.clearSettings();
+      rethrow;
+    }
   }
 }

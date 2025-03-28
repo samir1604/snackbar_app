@@ -23,13 +23,12 @@ class Routers {
       errorPageBuilder: (_, __) => MaterialPage(child: HomePage()),
       redirect: (context, state) async {
         final isLoginPath = state.path == RoutesPath.loginPath;
-        final isKeepMeSinged = await _settings.keepMeSignedIn;
-        final isLogged = await _settings.isLoggedIn;
 
-        if (!isLogged && !isKeepMeSinged && !isLoginPath) {
+        if (!_settings.isLoggedIn && !isLoginPath) {
           return RoutesPath.loginPath;
         }
 
+        /*
         if (isLogged && !isKeepMeSinged && !isLoginPath) {
           if (_settings.loginTimeStamp == null) return RoutesPath.loginPath;
 
@@ -42,7 +41,7 @@ class Routers {
           } else {
             _settings.setLoginTimeStamp();
           }
-        }
+        }*/
 
         return null;
       });

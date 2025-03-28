@@ -6,6 +6,7 @@ import '../common/common.dart';
 import '../features/auth/auth.dart';
 
 import 'core.dart';
+import 'local/in_memory_cache.dart';
 
 final getIt = GetIt.instance;
 
@@ -25,8 +26,11 @@ void initServiceLocator() {
       getIt<ProfileServices>(),
       getIt<TokenServices>(),
       getIt<SecureStorage>(),
+      getIt<InMemoryCache>(),
     ),
   );
+
+  getIt.registerLazySingleton<InMemoryCache>(() => InMemoryCache());
 
   /// Connection
   getIt.registerLazySingleton<Dio>(() {
@@ -40,8 +44,9 @@ void initServiceLocator() {
       HttpFormatter(loggingFilter: (_, __, ___) => true),
       NetworkInterceptor(
         dio,
-        getIt<TokenServices>(),
-        getIt<ProfileServices>(),
+        getIt<SettingsServices>(),
+        //getIt<TokenServices>(),
+        //getIt<ProfileServices>(),
       ),
     ]);
 
@@ -58,15 +63,16 @@ void initServiceLocator() {
   );
 
   /// Use Cases
-  getIt.registerLazySingleton<UseCase<User, LoginParams>>(
+  getIt.registerLazySingleton<UseCase<bool, LoginParams>>(
     () => LoginUseCase(
       getIt<AuthRepository>(),
-      getIt<SecureStorage>(),
       getIt<SettingsServices>(),
+      //getIt<SecureStorage>(),
+
     ),
   );
 
   /// View Models
   getIt.registerFactory<LoginViewModel>(
-      () => LoginViewModel(getIt<UseCase<User, LoginParams>>()));
+      () => LoginViewModel(getIt<UseCase<bool, LoginParams>>()));
 }

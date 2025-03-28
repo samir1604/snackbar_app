@@ -3,23 +3,23 @@ import 'dart:async';
 import '../../features/auth/auth.dart';
 
 abstract interface class SettingsServices {
+  Future<void> initialize();
+
   Future<void> clearSettings();
 
-  Future<User?> get user;
+  User? get user;
 
-  Future<String> get token;
+  bool get keepMeSignedIn;
 
-  Future<String> get refreshToken;
+  String get accessToken;
 
-  Future<bool> get keepMeSignedIn;
+  String get refreshToken;
 
-  Future<bool> get isLoggedIn;
+  bool get isLoggedIn;
 
   Future<void> saveKeepSinged(bool keepSinged);
 
-  Future<void> initialize();
+  Future<void> saveProfile(User user);
 
-  void setLoginTimeStamp();
-
-  DateTime? get loginTimeStamp;
+  Future<void> saveTokens(String accessToken, String refreshToken);
 }

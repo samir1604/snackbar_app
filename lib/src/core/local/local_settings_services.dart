@@ -1,97 +1,115 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+
 import '../../common/common.dart';
 import '../../features/auth/auth.dart';
 import '../core.dart';
+import 'in_memory_cache.dart';
 
 final class LocalSettingsServices implements SettingsServices {
-  const LocalSettingsServices(this._profile, this._tokens, this._storage);
+  const LocalSettingsServices(
+    this._profileService,
+    this._tokenService,
+    this._storageService,
+    this._cache,
+  );
 
-  final ProfileServices _profile;
-  final TokenServices _tokens;
-  final SecureStorage _storage;
-
-  static User? _currentUser;
-  static String _token = '';
-  static String _refreshToken = '';
-  static String? _keepMeSingIn;
-  static DateTime? _loginTimeStamp;
-
-  @override
-  Future<void> clearSettings() async {
-    _currentUser = null;
-    _token = '';
-    _refreshToken = '';
-    _keepMeSingIn = null;
-
-    Future.wait([
-      _profile.clearStorageProfile(),
-      _tokens.clearStorageTokens(),
-    ]);
-  }
+  final ProfileServices _profileService;
+  final TokenServices _tokenService;
+  final SecureStorage _storageService;
+  final InMemoryCache _cache;
 
   @override
   Future<void> initialize() async {
-    Future.wait([
-      _getProfile(),
-      _isSigned(),
-      _getToken(),
-      _getRefreshToken(),
+    await _getKeepSinged();
+
+    debugPrint('Initialize: $keepMeSignedIn');
+
+    if (keepMeSignedIn) {
+      Future.wait([
+        _getProfile(),
+        _getTokens(),
+      ]);
+    }
+  }
+
+  @override
+  Future<void> clearSettings() async {
+    _cache.clear();
+
+    await Future.wait([
+      _profileService.clearStorageProfile(),
+      _tokenService.clearStorageTokens(),
+      _clearKeepSignedIn(),
     ]);
   }
 
   @override
-  Future<User?> get user async => await _getProfile();
-
-  Future<User?> _getProfile() async =>
-      _currentUser ??= await _profile.getStorageProfile();
+  User? get user => _cache.read(SecureStorageKeys.profileStorageKey);
 
   @override
-  Future<bool> get keepMeSignedIn async => await _isSigned();
+  bool get keepMeSignedIn =>
+      _cache.read(SecureStorageKeys.keepMeSingedInKey)?.toLowerCase() == 'true';
 
   @override
-  Future<bool> get isLoggedIn async {
-    final isToken = await _getToken();
-    return isToken.isNotEmpty;
-  }
-
-  Future<bool> _isSigned() async {
-    _keepMeSingIn ??= await _storage.read(SecureStorageKeys.keepMeSingInKey);
-    return _keepMeSingIn?.toLowerCase() == 'true';
-  }
+  String get accessToken =>
+      _cache.read(SecureStorageKeys.accessTokenStorageKey) ?? '';
 
   @override
-  Future<String> get token async => _getToken();
+  String get refreshToken =>
+      _cache.read(SecureStorageKeys.refreshTokenStorageKey) ?? '';
 
-  Future<String> _getToken() async {
-    if (_token.isEmpty) {
-      _token = await _tokens.getStorageAccessToken() ?? '';
+  @override
+  bool get isLoggedIn => accessToken.isNotEmpty && refreshToken.isNotEmpty;
+
+  @override
+  Future<void> saveProfile(User user) async {
+    _cache.write(key: SecureStorageKeys.profileStorageKey, value: user);
+
+    if (keepMeSignedIn) {
+      _profileService.saveProfileToStorage(user);
     }
-    return _token;
   }
 
-  @override
-  Future<String> get refreshToken async => _getRefreshToken();
-
-  Future<String> _getRefreshToken() async {
-    if (_refreshToken.isEmpty) {
-      _refreshToken = await _tokens.getStorageRefreshToken() ?? '';
-    }
-    return _refreshToken;
-  }
+  Future<void> _getProfile() async => _cache.write(
+      key: SecureStorageKeys.profileStorageKey,
+      value: await _profileService.getStorageProfile());
 
   @override
   Future<void> saveKeepSinged(bool keepSinged) async {
-    _keepMeSingIn = keepSinged.toString();
-    await _storage.write(
-        SecureStorageKeys.keepMeSingInKey, keepSinged.toString());
+    _cache.write(
+        key: SecureStorageKeys.keepMeSingedInKey, value: keepSinged.toString());
+
+    await _storageService.write(
+        SecureStorageKeys.keepMeSingedInKey, keepSinged.toString());
   }
 
-  @override
-  void setLoginTimeStamp() {
-    _loginTimeStamp = DateTime.now();
-  }
+  Future<void> _getKeepSinged() async => _cache.write(
+      key: SecureStorageKeys.keepMeSingedInKey,
+      value: await _storageService.read(SecureStorageKeys.keepMeSingedInKey));
 
   @override
-  DateTime? get loginTimeStamp => _loginTimeStamp;
+  Future<void> saveTokens(String accessToken, String refreshToken) async {
+    _cache.write(
+        key: SecureStorageKeys.accessTokenStorageKey, value: accessToken);
+    _cache.write(
+        key: SecureStorageKeys.refreshTokenStorageKey, value: refreshToken);
+
+    if (keepMeSignedIn) {
+      await _tokenService.saveTokensToStorage(accessToken, refreshToken);
+    }
+  }
+
+  Future<void> _getTokens() async {
+    _cache.write(
+        key: SecureStorageKeys.accessTokenStorageKey,
+        value: await _tokenService.getStorageAccessToken());
+    _cache.write(
+        key: SecureStorageKeys.refreshTokenStorageKey,
+        value: await _tokenService.getStorageRefreshToken());
+  }
+
+  Future<void> _clearKeepSignedIn() =>
+      _storageService.delete(SecureStorageKeys.keepMeSingedInKey);
 }
